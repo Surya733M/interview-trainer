@@ -74,7 +74,7 @@ async def upload_resume(
     # ── Parse resume (Step 8 & 9 will fill these in) ──────────────────────────
     # Placeholder until resume_service and skill_extractor are built
     from app.services.resume_service import parse_and_analyze_resume
-    analysis = parse_and_analyze_resume(temp_path, current_user.id, db)
+    analysis = parse_and_analyze_resume(temp_path, current_user.id, db, job_title)
 
     logger.success(f"Resume uploaded and analysed for user {current_user.id}")
     return analysis
