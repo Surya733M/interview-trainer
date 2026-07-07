@@ -42,29 +42,28 @@ async def lifespan(app: FastAPI):
     Code after  `yield` → runs on shutdown.
     """
     # ── STARTUP ───────────────────────────────────────────────────────────────
-    logger.info(f"🚀 Starting {settings.app_name} v{settings.app_version}")
-    logger.info(f"   Debug mode : {settings.debug}")
-    logger.info(f"   Database   : {settings.database_url}")
-    logger.info(f"   Frontend   : {settings.frontend_url}")
+    logger.info(f"Starting {settings.app_name} v{settings.app_version}")
+    logger.info(f"  Debug mode : {settings.debug}")
+    logger.info(f"  Database   : {settings.database_url}")
+    logger.info(f"  Frontend   : {settings.frontend_url}")
 
     # Create upload and reports directories if they don't exist
     os.makedirs(settings.upload_dir, exist_ok=True)
     os.makedirs("./reports", exist_ok=True)
     os.makedirs("./logs", exist_ok=True)
-    logger.info("📁 Storage directories verified.")
+    logger.info("Storage directories verified.")
 
     # Initialise database tables
-    # (database.py created in Step 4 — uncomment then)
-    # from app.database import init_db
-    # init_db()
-    # logger.info("🗄️  Database initialised.")
+    from app.database import init_db
+    init_db()
+    logger.info("Database initialised.")
 
-    logger.success("✅ Application startup complete.")
+    logger.success("Application startup complete.")
 
     yield  # ← Application is running while paused here
 
     # ── SHUTDOWN ──────────────────────────────────────────────────────────────
-    logger.info("🛑 Application shutting down...")
+    logger.info("Application shutting down...")
 
 
 # ── Create FastAPI instance ────────────────────────────────────────────────────
@@ -142,11 +141,11 @@ async def root():
 # Routers are added here with a URL prefix and tag for grouping in Swagger UI
 # Uncomment each as we build the corresponding step:
 
-# from app.routes import auth, resume, interview, report, dashboard
-# app.include_router(auth.router,       prefix="/auth",       tags=["Authentication"])
-# app.include_router(resume.router,     prefix="/resume",     tags=["Resume"])
-# app.include_router(interview.router,  prefix="/interview",  tags=["Interview"])
-# app.include_router(report.router,     prefix="/report",     tags=["Report"])
-# app.include_router(dashboard.router,  prefix="/dashboard",  tags=["Dashboard"])
+from app.routes import auth, resume, interview, report
+app.include_router(auth.router)
+app.include_router(resume.router)
+app.include_router(interview.router)
+app.include_router(report.router)
+app.include_router(report.dashboard_router)
 
-logger.info("📌 All routers registered.")
+logger.info("All routers registered.")

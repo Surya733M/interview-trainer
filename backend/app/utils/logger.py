@@ -14,6 +14,19 @@ Log levels (in order of severity):
 """
 
 import sys
+import os
+
+# Force UTF-8 output on Windows so log messages never crash the terminal.
+# Python 3.7+ respects PYTHONUTF8=1 to use UTF-8 everywhere.
+os.environ.setdefault("PYTHONUTF8", "1")
+
+# Reconfigure stdout to UTF-8 if running on Windows (cp1252 by default)
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 from loguru import logger
 
 # ── Remove the default loguru handler ─────────────────────────────────────────
