@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────
+# Interview Trainer Agent — Python Dependencies
+# ─────────────────────────────────────────────
+
+# Web Framework
+fastapi==0.115.0          # Modern async API framework
+uvicorn[standard]==0.30.6 # ASGI server to run FastAPI
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0  # JWT token creation & validation
+passlib[bcrypt]==1.7.4            # Password hashing (bcrypt algorithm)
+python-multipart==0.0.9           # Required for file uploads in FastAPI
+
+# Database (ORM)
+sqlalchemy==2.0.35        # ORM — works with SQLite (dev) and PostgreSQL (prod)
+alembic==1.13.3           # Database migrations (schema versioning)
+
+# Validation & Settings
+pydantic==2.9.2           # Data validation (FastAPI uses this internally)
+pydantic-settings==2.5.2  # Load settings from .env file
+
+# Resume Parsing
+pymupdf==1.24.11          # PDF text extraction (imported as 'fitz')
+
+# AI — IBM watsonx
+ibm-watsonx-ai==1.1.9     # Official IBM SDK for Granite models + embeddings
+
+# Vector Database (local dev — migrates to watsonx.data later)
+chromadb==0.5.15          # Local vector database with persistent storage
+
+# Embeddings fallback (used if IBM Granite embedding is unavailable)
+sentence-transformers==3.1.1   # HuggingFace embedding models
+
+# HTTP Client
+httpx==0.27.2             # Async HTTP client (used internally by FastAPI)
+requests==2.32.3          # Sync HTTP requests
+
+# File Storage — IBM Cloud Object Storage
+ibm-cos-sdk==2.13.6       # IBM COS (S3-compatible) Python SDK
+
+# PDF Report Generation
+reportlab==4.2.4          # Generate PDF reports from Python
+
+# Utilities
+python-dotenv==1.0.1      # Load .env files into environment variables
+python-dateutil==2.9.0    # Date/time parsing utilities
+loguru==0.7.2             # Beautiful, structured logging
+
+# NLP for skill extraction
+spacy==3.7.6              # NLP library for named entity recognition
+# After installing, run: py -m spacy download en_core_web_sm
+
+# CORS and extras
+email-validator==2.2.0    # Validate email addresses in Pydantic schemas
