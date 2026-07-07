@@ -1,0 +1,52 @@
+[
+  {
+    "id": "java_001", "topic": "Java", "type": "technical", "difficulty": "easy",
+    "question": "What are the main features of Java?",
+    "answer": "Java key features: (1) Platform independent — Write Once Run Anywhere (WORA) via JVM bytecode. (2) Object-Oriented — everything is a class/object (except primitives). (3) Strongly typed — all variable types must be declared. (4) Automatic memory management via Garbage Collection. (5) Multithreading built-in. (6) Robust — exception handling, no pointer arithmetic. (7) Secure — no direct memory access. (8) Rich standard library (Java API). (9) Large ecosystem: Spring, Hibernate, Maven. Popular for enterprise applications, Android development, and backend services."
+  },
+  {
+    "id": "java_002", "topic": "Java", "type": "technical", "difficulty": "medium",
+    "question": "Explain the difference between JDK, JRE, and JVM.",
+    "answer": "JVM (Java Virtual Machine): executes Java bytecode. Platform-specific (different JVM for Windows/Linux/Mac). Provides: memory management, garbage collection, security sandbox. JRE (Java Runtime Environment): JVM + standard libraries needed to RUN Java programs. If you only want to run Java, install JRE. JDK (Java Development Kit): JRE + development tools (javac compiler, debugger, javadoc, jarsigner). If you want to DEVELOP Java, install JDK. Hierarchy: JDK ⊃ JRE ⊃ JVM. Modern distributions (Java 11+): JDK includes JRE."
+  },
+  {
+    "id": "java_003", "topic": "Java", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between abstract class and interface in Java?",
+    "answer": "Abstract class: can have abstract (no body) AND concrete methods, can have constructors, instance variables, any access modifiers. A class can extend ONLY ONE abstract class. Use when sharing code among closely related classes. Interface: (pre-Java 8) only abstract methods. Java 8+: can have default and static methods. Java 9+: private methods. All fields are public static final. A class can implement MULTIPLE interfaces. Use for defining contracts/capabilities. Abstract class = IS-A relationship. Interface = CAN-DO/HAS-A capability. When in doubt: favour interfaces for flexibility."
+  },
+  {
+    "id": "java_004", "topic": "Java", "type": "technical", "difficulty": "easy",
+    "question": "Explain the four pillars of OOP in Java.",
+    "answer": "(1) Encapsulation: binding data (fields) and methods inside a class, hiding internal state with private access modifiers and exposing only via public getters/setters. (2) Inheritance: a child class extends a parent class, inheriting its fields and methods. Java supports single inheritance for classes, multiple for interfaces. (3) Polymorphism: compile-time (method overloading — same name, different params) and runtime (method overriding — child class redefines parent method, called via parent reference). (4) Abstraction: hiding complexity, showing only essential features. Achieved via abstract classes and interfaces."
+  },
+  {
+    "id": "java_005", "topic": "Java", "type": "technical", "difficulty": "medium",
+    "question": "What is Java Collections Framework? Explain the key data structures.",
+    "answer": "Java Collections Framework provides ready-to-use data structure implementations. Key interfaces: Collection (List, Set, Queue), Map. ArrayList: dynamic array, O(1) get, O(n) insert/delete in middle. LinkedList: doubly linked, O(1) add/remove at ends, O(n) get by index. HashMap: key-value pairs, O(1) average for get/put, unsorted, allows null key. TreeMap: sorted by key, O(log n) operations. HashSet: unique elements, O(1) operations. PriorityQueue: heap-based, smallest element first. LinkedHashMap: insertion-order HashMap. Choose based on: ordering needs, time complexity, null handling."
+  },
+  {
+    "id": "java_006", "topic": "Java", "type": "technical", "difficulty": "hard",
+    "question": "Explain Java multithreading, synchronisation, and the Thread lifecycle.",
+    "answer": "Thread lifecycle: NEW → RUNNABLE → RUNNING → BLOCKED/WAITING/TIMED_WAITING → TERMINATED. Create threads: extend Thread class or implement Runnable, then new Thread(runnable).start(). Synchronisation prevents race conditions when multiple threads access shared data. synchronized keyword on methods or blocks ensures only one thread executes at a time. volatile keyword ensures visibility across threads. Problems: deadlock (two threads each wait for a lock the other holds), starvation, race conditions. Java 5+: java.util.concurrent — ExecutorService, Future, ConcurrentHashMap, CountDownLatch, Semaphore are preferred over raw threads."
+  },
+  {
+    "id": "java_007", "topic": "Java", "type": "technical", "difficulty": "medium",
+    "question": "What are Java Streams (Java 8+)? Give examples.",
+    "answer": "Streams provide a functional, declarative way to process collections. They don't store data — they process elements lazily on demand. Operations: filter(), map(), flatMap(), sorted(), distinct(), limit(), skip() — intermediate (lazy). collect(), forEach(), count(), reduce(), findFirst() — terminal (trigger processing). Example: List<String> names = people.stream().filter(p -> p.getAge()>18).map(Person::getName).sorted().collect(Collectors.toList()). parallelStream() for parallel processing. Method references: Person::getName. Streams are not reusable — create a new stream each time."
+  },
+  {
+    "id": "java_008", "topic": "Java", "type": "technical", "difficulty": "medium",
+    "question": "What is Spring Boot? Why is it popular for building microservices?",
+    "answer": "Spring Boot is an opinionated framework that simplifies Spring application setup with auto-configuration and embedded servers. Key features: (1) Auto-configuration — detects classpath and configures beans automatically. (2) Embedded Tomcat/Jetty — no external server deployment needed. (3) Starter dependencies — spring-boot-starter-web, starter-data-jpa etc. bundle related dependencies. (4) Spring Actuator — production-ready health checks, metrics. (5) Spring Security for auth. (6) Spring Data JPA for database access. Popular for microservices because: fast startup, small footprint, built-in REST support, easy to containerise with Docker."
+  },
+  {
+    "id": "java_009", "topic": "Java", "type": "technical", "difficulty": "easy",
+    "question": "What is the difference between String, StringBuilder, and StringBuffer?",
+    "answer": "String: immutable — every 'modification' creates a new object. Safe to share, stored in String Pool for memory efficiency. Bad for heavy concatenation in loops. StringBuilder: mutable, not thread-safe, fastest for single-threaded string building. Use in loops: sb.append(). StringBuffer: mutable, thread-safe (synchronised methods), slower than StringBuilder. Use when: multiple threads modify the same buffer. Performance: StringBuilder >> StringBuffer >> String for repeated modifications. String is fine for occasional concatenation. Java 9+ compiler optimises String + operations automatically in many cases."
+  },
+  {
+    "id": "java_010", "topic": "Java", "type": "technical", "difficulty": "hard",
+    "question": "Explain Java's memory model — heap vs stack, and garbage collection.",
+    "answer": "Stack: stores method frames, local variables, references. LIFO, thread-specific, fast, automatically cleaned when method returns. Heap: stores all objects, shared across threads, managed by GC. Divided into: Young Generation (Eden + Survivor spaces, frequent minor GC), Old Generation (long-lived objects, major GC). GC algorithms: Serial, Parallel, G1 (default Java 9+), ZGC (low-latency). GC triggers when memory is low. Memory leaks in Java: holding references in static collections, unclosed streams, listeners not removed. Use try-with-resources and WeakHashMap to prevent leaks."
+  }
+]

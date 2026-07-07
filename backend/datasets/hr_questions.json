@@ -1,0 +1,57 @@
+[
+  {
+    "id": "hr_001", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "Tell me about yourself.",
+    "answer": "This is your 90-second elevator pitch. Structure (Present-Past-Future): Present — current role/situation and key strengths relevant to the job. Past — 1-2 most relevant experiences and achievements. Future — why you're excited about this opportunity. Keep it professional (not personal life). Tailor to the role — highlight skills they're looking for. End with why you're interested in this specific position. Example: 'I'm a final-year B.Tech CS student at [college] with strong skills in Python and React, having built [project]. I interned at [company] where I [achievement]. I'm now looking for a full-time role where I can apply my skills to [company's domain] and grow as an engineer.'"
+  },
+  {
+    "id": "hr_002", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "What are your strengths and weaknesses?",
+    "answer": "Strengths: choose 2-3 that are genuinely relevant to the role, backed by examples. Not generic ('hardworking') but specific ('I have strong debugging skills — I've resolved critical production issues under time pressure multiple times'). Weaknesses: show self-awareness + active improvement. Give a genuine weakness that's NOT a core skill requirement for the job. Always follow with: what you're doing to improve it. Example: 'I used to struggle with public speaking. I joined my college's debate club, gave 3 technical talks last semester, and now feel confident presenting to audiences of 20+ people.' Avoid: 'perfectionism is my weakness' (cliché), saying you have no weaknesses."
+  },
+  {
+    "id": "hr_003", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "Where do you see yourself in 5 years?",
+    "answer": "Show ambition + realistic planning + alignment with the company's direction. Structure: (1) Short-term (1-2 years): master the technical skills needed for the role, deliver impactful projects, become a reliable team member. (2) Medium-term (3-5 years): take on more responsibility, possibly lead a small team or own a product area, develop specialised expertise. (3) Connect to company: 'I see myself growing within [company] as it expands its [relevant area].' Avoid: specific titles ('I want to be CTO'), roles outside the company's scope, anything that suggests you'll leave soon. Show commitment to growth within the organisation."
+  },
+  {
+    "id": "hr_004", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "Why should we hire you?",
+    "answer": "Your 60-second sales pitch. Three-part structure: (1) You can do the job — highlight specific skills and experiences that match the requirements. (2) You'll deliver results — give a concrete example of past achievement similar to what this role needs. (3) You fit the culture — show alignment with company values and team environment. Research the job description thoroughly. Connect YOUR experience to THEIR needs explicitly. Example: 'Based on your requirement for a backend developer who knows Python and REST APIs, I've spent the last year building FastAPI microservices at [company], delivering [result]. I'm confident I can contribute immediately and grow with your team.'"
+  },
+  {
+    "id": "hr_005", "topic": "HR", "type": "hr", "difficulty": "medium",
+    "question": "How do you handle work-life balance?",
+    "answer": "Show maturity and self-awareness. Acknowledge that at times there are crunch periods — show you can handle them. But also that you maintain sustainable practices for the long term because burnout hurts productivity and team. Mention: time management techniques (time-blocking, prioritisation), clear communication with team about capacity, maintaining health (exercise, sleep), boundaries around off-hours communication. Show you can distinguish between occasional emergencies (acceptable) and chronic overwork (unsustainable). Tailor to company culture — startups expect more flexibility, enterprise more structure."
+  },
+  {
+    "id": "hr_006", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "What are your salary expectations?",
+    "answer": "Research market rates before the interview (Glassdoor, LinkedIn Salary, AmbitionBox for India, Levels.fyi for tech). Give a range rather than a single number. The bottom of your range should be what you'd accept, top of range what you ideally want. Frame positively: 'Based on my research of the market and given my [skills/experience], I'm expecting a range of [X to Y]. I'm open to discussing the complete compensation package including benefits and growth opportunities.' If asked too early: 'I'd like to learn more about the role and responsibilities first — I'm sure we can find something mutually agreeable.' Avoid being the first to give a number if possible."
+  },
+  {
+    "id": "hr_007", "topic": "HR", "type": "hr", "difficulty": "medium",
+    "question": "Do you have any questions for us?",
+    "answer": "ALWAYS have 3-5 thoughtful questions. Not asking questions signals low interest. Great questions: (1) About the role: 'What does a typical day look like? What would I be working on in the first 3 months?' (2) About team/culture: 'What does the team dynamic look like? How does the team approach code reviews and technical decisions?' (3) About growth: 'What are the opportunities for learning and advancement?' (4) About challenges: 'What are the biggest technical challenges the team is currently facing?' (5) About the interviewer: 'What do you enjoy most about working here?' Avoid: salary/benefits (discuss later), already answered questions, negative tone."
+  },
+  {
+    "id": "hr_008", "topic": "HR", "type": "hr", "difficulty": "medium",
+    "question": "How do you stay updated with the latest technology trends?",
+    "answer": "Show genuine passion for learning and specific, credible sources. Good answers: (1) Reading: specific blogs (Martin Fowler, engineering blogs of Google/Meta/Netflix), newsletters (TLDR, Pragmatic Engineer). (2) Community: GitHub, Stack Overflow, contributing to open source, tech meetups, conferences. (3) Hands-on: side projects, trying out new frameworks/tools, Kaggle for ML. (4) Learning platforms: Coursera, Udemy, official docs, YouTube (Fireship, Traversy Media, Sentdex). (5) Networking: Twitter/X tech community, LinkedIn. Show you don't just read — you build things to understand new tech. Have a specific recent example: 'I recently explored [technology] by building [small project].'"
+  },
+  {
+    "id": "hr_009", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "Are you comfortable relocating or working remotely?",
+    "answer": "Be honest about your actual preference and constraints. For relocation: if open to it, say so clearly. If you have constraints (family, ongoing education), be transparent but frame positively ('I'm currently tied to [city] for the next 6 months due to [reason], but after that I'm fully open to relocation'). For remote: highlight any remote work experience — show you can work independently, communicate asynchronously, manage your time, use collaboration tools (Slack, Jira, Confluence, Zoom). If you prefer hybrid, say so — many companies offer this. Honesty prevents mismatched expectations that lead to early attrition."
+  },
+  {
+    "id": "hr_010", "topic": "HR", "type": "hr", "difficulty": "medium",
+    "question": "What motivates you in your work?",
+    "answer": "Authentic answer beats rehearsed answer. Common genuine motivators for engineers: solving hard technical problems, seeing users use what you built, shipping things that scale, learning new technologies, mentoring others, working on products with positive social impact, being part of a high-performing team. Choose 2-3 that genuinely apply to you and give specific examples. Connect to the company's work: 'I'm motivated by building AI tools that genuinely help people — which is why this role at [company] working on [product] excites me.' Avoid: money (even if true, don't say it as primary motivator), external validation, avoiding failure."
+  },
+  {
+    "id": "hr_011", "topic": "HR", "type": "hr", "difficulty": "easy",
+    "question": "What is your notice period / when can you join?",
+    "answer": "Be accurate and honest. Standard notice periods: fresher — immediate/2 weeks, experienced — 30/60/90 days (common in India). If you can negotiate with current employer for early release, mention it: 'My official notice period is 60 days, but I'll try to negotiate an early release and could potentially join in 30 days.' For freshers with no current job: 'I'm available to join immediately.' Have clarity on any joining bonuses, unvested ESOPs, or leave encashment that might affect your decision. Companies factor notice period into offer timelines — be upfront to avoid last-minute complications."
+  }
+]

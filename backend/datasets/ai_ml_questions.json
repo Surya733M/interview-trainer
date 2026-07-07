@@ -1,0 +1,42 @@
+[
+  {
+    "id": "aiml_001", "topic": "Machine Learning", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between supervised, unsupervised, and reinforcement learning?",
+    "answer": "Supervised Learning: trained on labelled data (input-output pairs). Model learns to map inputs to correct outputs. Types: Classification (discrete output — spam/not-spam, image labels) and Regression (continuous output — house prices, temperature). Algorithms: Linear/Logistic Regression, Decision Trees, SVM, Neural Networks. Unsupervised Learning: trained on unlabelled data. Finds hidden patterns/structure. Types: Clustering (K-Means, DBSCAN — group similar items), Dimensionality Reduction (PCA, t-SNE — reduce features). Reinforcement Learning: agent learns by taking actions in an environment and receiving rewards/penalties. No labelled data — learns through trial and error. Used in: game playing (AlphaGo), robotics, recommendation systems."
+  },
+  {
+    "id": "aiml_002", "topic": "Machine Learning", "type": "technical", "difficulty": "medium",
+    "question": "What is overfitting and underfitting? How do you prevent them?",
+    "answer": "Overfitting: model learns training data too well including noise, performs poorly on new data. High training accuracy, low test accuracy. Symptoms: too complex model, too little data. Prevention: more training data, regularisation (L1/Lasso, L2/Ridge add penalty for large weights), dropout (randomly disable neurons during training), early stopping (stop when validation loss increases), cross-validation, simpler model. Underfitting: model too simple to learn the underlying patterns. Low accuracy on both training and test sets. Fix: more complex model, more features, train longer, reduce regularisation. Bias-Variance Tradeoff: underfitting = high bias, overfitting = high variance. Optimal model balances both."
+  },
+  {
+    "id": "aiml_003", "topic": "Machine Learning", "type": "technical", "difficulty": "medium",
+    "question": "Explain how a neural network works. What are activation functions?",
+    "answer": "Neural network: layers of interconnected nodes (neurons). Input layer receives features. Hidden layers transform data through weighted connections. Output layer produces predictions. Each neuron: weighted sum of inputs + bias → activation function → output. Training: forward pass (compute predictions), loss function (measure error), backpropagation (compute gradients via chain rule), gradient descent (update weights). Activation functions: (1) ReLU (max(0,x)) — most common hidden layer, fixes vanishing gradient. (2) Sigmoid (1/(1+e^-x)) — binary classification output, 0-1 range. (3) Softmax — multi-class classification output, probabilities sum to 1. (4) Tanh — outputs -1 to 1. ReLU and its variants (Leaky ReLU, ELU) dominate modern networks."
+  },
+  {
+    "id": "aiml_004", "topic": "Machine Learning", "type": "technical", "difficulty": "hard",
+    "question": "What is a transformer model? How does self-attention work?",
+    "answer": "Transformer: architecture introduced in 'Attention is All You Need' (2017). Powers BERT, GPT, and IBM Granite. Key innovation: self-attention mechanism replaces RNNs entirely. Self-attention: each token computes how much to 'attend' to every other token in the sequence. For each token: create Query (Q), Key (K), Value (V) vectors using learned weight matrices. Attention score = softmax(QK^T / sqrt(d_k)) * V. Multi-head attention: run attention multiple times in parallel, concatenate results — each head learns different relationships. Positional encoding: adds position information since attention is permutation-invariant. Transformers excel at parallelisation (vs RNNs which are sequential) and capture long-range dependencies."
+  },
+  {
+    "id": "aiml_005", "topic": "AI", "type": "technical", "difficulty": "medium",
+    "question": "What is RAG (Retrieval-Augmented Generation)? How does it improve LLMs?",
+    "answer": "RAG combines information retrieval with text generation. Instead of relying solely on LLM training data (which has a knowledge cutoff and can hallucinate), RAG retrieves relevant documents from an external knowledge base and uses them as context for generation. Process: (1) Index documents as vector embeddings in a vector database. (2) When a query arrives, embed it and find semantically similar documents. (3) Inject retrieved documents into the LLM prompt as context. (4) LLM generates answer grounded in real documents. Benefits: reduced hallucinations, up-to-date information, source attribution, lower cost (no fine-tuning), domain-specific knowledge. Used in: chatbots, Q&A systems, document intelligence. IBM Granite + ChromaDB = RAG for Interview Trainer."
+  },
+  {
+    "id": "aiml_006", "topic": "AI", "type": "technical", "difficulty": "medium",
+    "question": "What are embeddings in AI? How are they used in semantic search?",
+    "answer": "Embeddings are dense numerical vector representations of text (or images, audio) that capture semantic meaning. Similar texts have similar vectors (measured by cosine similarity or dot product). Example: 'car' and 'automobile' have similar vectors; 'car' and 'pizza' have distant vectors. How embeddings are created: neural networks (BERT, sentence-transformers) process text and output a fixed-size vector (e.g., 768 dimensions). Semantic search: embed the query, find nearest vectors in the database using ANN (Approximate Nearest Neighbour) algorithms like HNSW (used by ChromaDB). Better than keyword search because it understands synonyms and context. IBM Slate model creates embeddings for Interview Trainer."
+  },
+  {
+    "id": "aiml_007", "topic": "Machine Learning", "type": "technical", "difficulty": "medium",
+    "question": "What are common metrics for evaluating ML models?",
+    "answer": "Classification: Accuracy (correct/total — misleading for imbalanced classes), Precision (TP/(TP+FP) — how many predicted positives are correct), Recall/Sensitivity (TP/(TP+FN) — how many actual positives were found), F1-Score (harmonic mean of precision+recall — balance both), AUC-ROC (area under ROC curve — model's ability to discriminate classes, 0.5=random, 1=perfect). Regression: MAE (Mean Absolute Error), MSE/RMSE (Mean Squared Error — penalises large errors more), R² (coefficient of determination — 0 to 1, how much variance explained). Clustering: Silhouette score, Inertia. Choose metric based on business cost of false positives vs false negatives."
+  },
+  {
+    "id": "aiml_008", "topic": "Machine Learning", "type": "technical", "difficulty": "hard",
+    "question": "What is fine-tuning an LLM vs prompt engineering vs RAG? When to use each?",
+    "answer": "Prompt Engineering: craft better prompts (instructions, examples, chain-of-thought) to guide the LLM without changing its weights. Zero cost, instant, but limited by model's base knowledge. Best for: simple tasks, general-purpose models. RAG: retrieve relevant documents at inference time, inject as context. No model training. Best for: domain-specific Q&A, up-to-date information, factual accuracy. Cost: vector database + retrieval latency. Fine-tuning: retrain the model on domain-specific data, updating weights. Most powerful for style/format/domain adaptation but expensive (compute, time, data collection). Best for: specific writing style, specialised tasks, when prompt engineering fails. Often combine all three: good prompts + RAG for facts + fine-tuning for style."
+  }
+]

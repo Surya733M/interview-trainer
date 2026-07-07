@@ -1,0 +1,52 @@
+[
+  {
+    "id": "sql_001", "topic": "SQL", "type": "technical", "difficulty": "easy",
+    "question": "What are the different types of SQL JOINs? Explain with examples.",
+    "answer": "INNER JOIN: returns rows where there is a match in BOTH tables. SELECT * FROM orders o INNER JOIN customers c ON o.customer_id=c.id. LEFT JOIN (LEFT OUTER): all rows from left table + matching from right; NULLs where no match. RIGHT JOIN: all rows from right + matching from left. FULL OUTER JOIN: all rows from both tables, NULLs where no match. CROSS JOIN: Cartesian product — every row of left with every row of right (use carefully). SELF JOIN: joining a table to itself (e.g., finding employees and their managers in same table). Use INNER for required matches, LEFT for optional relationships."
+  },
+  {
+    "id": "sql_002", "topic": "SQL", "type": "technical", "difficulty": "medium",
+    "question": "What is database normalisation? Explain 1NF, 2NF, 3NF.",
+    "answer": "Normalisation eliminates redundancy and ensures data integrity. 1NF (First Normal Form): no repeating groups, each column has atomic (single) values, each row is unique (has primary key). 2NF: satisfies 1NF + every non-key column is fully dependent on the ENTIRE primary key (no partial dependencies). Applies to composite primary keys. 3NF: satisfies 2NF + no transitive dependencies (non-key columns depend only on primary key, not on other non-key columns). BCNF (Boyce-Codd): stricter 3NF. Denormalisation: intentionally adding redundancy for read performance (reporting databases)."
+  },
+  {
+    "id": "sql_003", "topic": "SQL", "type": "technical", "difficulty": "medium",
+    "question": "What are SQL indexes? How do they improve performance?",
+    "answer": "An index is a data structure (usually B-tree) that allows the database to find rows quickly without scanning the entire table. Like a book index — find page number without reading every page. CREATE INDEX idx_email ON users(email). Types: Clustered (physically orders table data — one per table), Non-clustered (separate structure with pointers to rows — multiple allowed), Composite (multiple columns), Unique, Full-text. Tradeoffs: speeds up SELECT/WHERE queries but slows INSERT/UPDATE/DELETE (index must be updated). Index columns that appear frequently in WHERE, JOIN, ORDER BY. Don't index low-cardinality columns like boolean."
+  },
+  {
+    "id": "sql_004", "topic": "SQL", "type": "technical", "difficulty": "easy",
+    "question": "What is the difference between WHERE and HAVING in SQL?",
+    "answer": "WHERE: filters rows BEFORE grouping. Works on individual rows. Cannot use aggregate functions (SUM, COUNT, AVG). Example: SELECT * FROM orders WHERE amount > 100. HAVING: filters GROUPS after GROUP BY. Works on aggregated results. Can use aggregate functions. Example: SELECT customer_id, COUNT(*) as orders FROM orders GROUP BY customer_id HAVING COUNT(*) > 5. Execution order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. You can use both: SELECT dept, AVG(salary) FROM employees WHERE active=1 GROUP BY dept HAVING AVG(salary)>50000."
+  },
+  {
+    "id": "sql_005", "topic": "SQL", "type": "technical", "difficulty": "medium",
+    "question": "What are ACID properties in databases?",
+    "answer": "ACID ensures reliable database transactions: Atomicity — a transaction is all-or-nothing. If any part fails, the entire transaction is rolled back. No partial updates. Consistency — a transaction brings the database from one valid state to another. All constraints, rules, and triggers must be satisfied. Isolation — concurrent transactions are isolated from each other. They don't see each other's intermediate states. Levels: READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE (most strict). Durability — once committed, a transaction persists even if the system crashes. Achieved via write-ahead logging (WAL). PostgreSQL and MySQL InnoDB support full ACID."
+  },
+  {
+    "id": "sql_006", "topic": "SQL", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between SQL and NoSQL databases?",
+    "answer": "SQL (Relational): structured data in tables with fixed schema, ACID transactions, SQL query language, vertical scaling. Examples: PostgreSQL, MySQL, SQLite. Best for: complex queries, relationships, financial data, reporting. NoSQL: flexible schema (document, key-value, wide-column, graph), horizontal scaling, eventual consistency (usually), no standard query language. Types: Document (MongoDB — JSON documents), Key-Value (Redis — caching), Wide-Column (Cassandra — time series), Graph (Neo4j — relationships). Best for: unstructured data, high write throughput, distributed systems, real-time apps. Many modern apps use both (polyglot persistence)."
+  },
+  {
+    "id": "sql_007", "topic": "SQL", "type": "technical", "difficulty": "hard",
+    "question": "Explain window functions in SQL with examples.",
+    "answer": "Window functions perform calculations across a set of rows related to the current row WITHOUT collapsing them into groups (unlike GROUP BY). Syntax: function() OVER (PARTITION BY col ORDER BY col). ROW_NUMBER(): unique sequential number. RANK(): rank with gaps for ties. DENSE_RANK(): rank without gaps. LAG(col,n): value from n rows before. LEAD(col,n): value from n rows after. SUM() OVER(): running total. AVG() OVER(): moving average. Example: SELECT name, salary, RANK() OVER (PARTITION BY dept ORDER BY salary DESC) as rank FROM employees. Extremely useful for analytics, leaderboards, time-series analysis."
+  },
+  {
+    "id": "sql_008", "topic": "SQL", "type": "technical", "difficulty": "medium",
+    "question": "What are stored procedures and triggers in SQL?",
+    "answer": "Stored Procedure: a precompiled set of SQL statements stored in the database and executed by name. Benefits: reusability, security (grant execute without table access), reduced network traffic, precompiled execution plan. CREATE PROCEDURE GetUser(IN userId INT) BEGIN SELECT * FROM users WHERE id=userId; END. Trigger: automatically executes in response to database events (INSERT, UPDATE, DELETE) on a specified table. Uses: audit logging, enforcing complex constraints, maintaining derived columns. CREATE TRIGGER before_insert_user BEFORE INSERT ON users FOR EACH ROW SET NEW.created_at=NOW(). Both are powerful but make business logic harder to test and version-control."
+  },
+  {
+    "id": "sql_009", "topic": "SQL", "type": "technical", "difficulty": "easy",
+    "question": "What is a primary key vs foreign key vs unique key?",
+    "answer": "Primary Key: uniquely identifies each row. Cannot be NULL. One per table. Often auto-incremented integer or UUID. Automatically creates a clustered index. CREATE TABLE users (id INT PRIMARY KEY AUTO_INCREMENT). Foreign Key: creates a link between two tables. References the primary key of another table. Enforces referential integrity — prevents orphaned records. ON DELETE CASCADE automatically deletes child records when parent is deleted. FOREIGN KEY (user_id) REFERENCES users(id). Unique Key: ensures all values in a column are distinct. Unlike PK, can have NULL (multiple NULLs allowed in most DBs). Can have multiple unique keys per table. For email columns, phone numbers."
+  },
+  {
+    "id": "sql_010", "topic": "SQL", "type": "technical", "difficulty": "hard",
+    "question": "How would you optimise a slow SQL query?",
+    "answer": "Step-by-step optimisation: (1) EXPLAIN/EXPLAIN ANALYZE — see the query execution plan, identify full table scans. (2) Add indexes on WHERE, JOIN, ORDER BY columns. Check existing indexes aren't being ignored. (3) Avoid SELECT * — fetch only needed columns. (4) Avoid functions on indexed columns in WHERE (prevents index use): WHERE YEAR(created_at)=2023 → bad; use range instead. (5) Optimise JOINs — join on indexed columns. (6) Use pagination (LIMIT/OFFSET or cursor-based). (7) Avoid N+1 queries — use JOINs or batch queries. (8) Partition large tables. (9) Cache frequently-read data in Redis. (10) Consider read replicas for heavy read workloads."
+  }
+]

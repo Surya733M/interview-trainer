@@ -1,0 +1,52 @@
+[
+  {
+    "id": "os_001", "topic": "Operating Systems", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between a process and a thread?",
+    "answer": "Process: an independent program in execution with its own memory space (code, heap, stack, data segments), file handles, and system resources. Processes are isolated — one crash doesn't affect others. Context switching between processes is expensive. Thread: a lightweight unit of execution WITHIN a process. All threads in a process share the same memory space (heap, code, globals) but have their own stack and registers. Communication between threads is easy (shared memory) but requires synchronisation (mutex, semaphore) to avoid race conditions. Creating threads is cheaper than processes. Python: processes for CPU parallelism (multiprocessing), threads for I/O concurrency."
+  },
+  {
+    "id": "os_002", "topic": "Operating Systems", "type": "technical", "difficulty": "medium",
+    "question": "What is deadlock? What are the four necessary conditions (Coffman conditions)?",
+    "answer": "Deadlock: a state where two or more processes are permanently blocked, each waiting for a resource held by another. Coffman conditions (ALL four must hold simultaneously): (1) Mutual Exclusion — resources cannot be shared simultaneously. (2) Hold and Wait — process holding resources waits for additional ones. (3) No Preemption — resources cannot be forcibly taken from a process. (4) Circular Wait — circular chain of processes each waiting for resource held by the next. Prevention: break any one condition. Avoidance: Banker's algorithm. Detection: resource allocation graph. Recovery: kill process or rollback. In databases: use timeout and retry."
+  },
+  {
+    "id": "os_003", "topic": "Operating Systems", "type": "technical", "difficulty": "easy",
+    "question": "What is virtual memory and how does paging work?",
+    "answer": "Virtual memory allows programs to use more memory than physically available RAM by using disk space as an extension. Each process sees a large, contiguous virtual address space regardless of actual physical memory layout. Paging: divides virtual and physical memory into fixed-size blocks (pages, typically 4KB). The OS maintains a page table mapping virtual pages to physical frames. If a page is not in RAM (page fault), the OS loads it from disk (swap space). TLB (Translation Lookaside Buffer): hardware cache for page table lookups — makes virtual-to-physical translation fast. Benefits: process isolation, simplified memory allocation, run programs larger than RAM."
+  },
+  {
+    "id": "os_004", "topic": "Operating Systems", "type": "technical", "difficulty": "medium",
+    "question": "Explain CPU scheduling algorithms: FCFS, SJF, Round Robin, Priority.",
+    "answer": "FCFS (First Come First Served): simplest, non-preemptive, processes run in arrival order. Problem: convoy effect — short jobs wait behind long ones. SJF (Shortest Job First): run shortest burst time next. Optimal average waiting time but requires knowing burst time in advance. Starvation possible for long processes. Round Robin: each process gets a time quantum (10-100ms), then preempted. Fair, responsive, good for time-sharing. Performance depends on quantum size. Priority Scheduling: each process has priority, highest priority runs first. Starvation of low-priority — solved with ageing (gradually increase priority). MLFQ (Multi-Level Feedback Queue): used in modern OS, combines multiple queues with different priorities and time quantums."
+  },
+  {
+    "id": "dbms_001", "topic": "DBMS", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between DDL, DML, DCL, and TCL in SQL?",
+    "answer": "DDL (Data Definition Language): defines database structure. CREATE TABLE, ALTER TABLE, DROP TABLE, TRUNCATE. Changes are auto-committed. DML (Data Manipulation Language): manipulates data. SELECT, INSERT, UPDATE, DELETE. Can be rolled back in a transaction. DCL (Data Control Language): controls access. GRANT (give permissions), REVOKE (remove permissions). TCL (Transaction Control Language): manages transactions. COMMIT (save changes permanently), ROLLBACK (undo changes to last commit), SAVEPOINT (set a point to rollback to). TCL works with DML statements. DDL statements implicitly commit any pending transaction in most databases."
+  },
+  {
+    "id": "cn_001", "topic": "Computer Networks", "type": "technical", "difficulty": "medium",
+    "question": "Explain the OSI model and its 7 layers.",
+    "answer": "The OSI (Open Systems Interconnection) model is a conceptual framework for network communication. 7 layers (top to bottom): (7) Application: user-facing protocols — HTTP, FTP, SMTP, DNS. (6) Presentation: data formatting, encryption, compression — SSL/TLS, JPEG. (5) Session: managing connections, sessions — NetBIOS, SQL sessions. (4) Transport: end-to-end communication, error recovery — TCP (reliable), UDP (fast, unreliable). (3) Network: routing between networks — IP, ICMP, routers. (2) Data Link: node-to-node communication — Ethernet, MAC addresses, switches. (1) Physical: raw bits over cable/wireless — cables, hubs, repeaters. Mnemonic: 'All People Seem To Need Data Processing'."
+  },
+  {
+    "id": "cn_002", "topic": "Computer Networks", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between TCP and UDP?",
+    "answer": "TCP (Transmission Control Protocol): connection-oriented (3-way handshake: SYN→SYN-ACK→ACK), reliable (acknowledgements, retransmission of lost packets), ordered delivery, flow control, congestion control. Slower but guaranteed. Used for: HTTP/HTTPS, email, file transfer, database connections. UDP (User Datagram Protocol): connectionless, unreliable (no acknowledgement), no ordering guarantee, no congestion control. Fast, low overhead. Used for: video streaming, online gaming, DNS queries, VoIP, live broadcasts. Choose TCP when correctness matters; UDP when speed matters and occasional packet loss is acceptable."
+  },
+  {
+    "id": "cn_003", "topic": "Computer Networks", "type": "technical", "difficulty": "easy",
+    "question": "What is HTTP vs HTTPS? What happens during an HTTPS handshake?",
+    "answer": "HTTP: Hypertext Transfer Protocol, plaintext, port 80, no encryption — data visible to anyone intercepting. HTTPS: HTTP + TLS/SSL encryption, port 443. TLS Handshake: (1) Client sends ClientHello (supported TLS versions, cipher suites). (2) Server sends ServerHello (chosen cipher) + Certificate (public key + identity). (3) Client verifies certificate with CA (Certificate Authority). (4) Client and server exchange keys using asymmetric encryption to establish a shared symmetric session key. (5) All subsequent communication encrypted with symmetric key (faster than asymmetric). HTTP/2 requires HTTPS. Always use HTTPS in production — mandatory for cookies, geolocation API, service workers."
+  },
+  {
+    "id": "cn_004", "topic": "Computer Networks", "type": "technical", "difficulty": "medium",
+    "question": "What are REST API principles? What makes an API RESTful?",
+    "answer": "REST (Representational State Transfer) is an architectural style for APIs with 6 constraints: (1) Client-Server: separation of concerns, client handles UI, server handles data. (2) Stateless: each request contains all info needed, server stores no client session state. (3) Cacheable: responses should indicate if they can be cached. (4) Uniform Interface: consistent resource identification (URLs), standard HTTP methods (GET/POST/PUT/DELETE/PATCH), standard status codes (200/201/404/500). (5) Layered System: client doesn't know if connected directly to server or proxy. (6) Code on Demand (optional): server can send executable code. REST uses JSON/XML, is simple and widely adopted."
+  },
+  {
+    "id": "cn_005", "topic": "Computer Networks", "type": "technical", "difficulty": "easy",
+    "question": "What is DNS and how does it work?",
+    "answer": "DNS (Domain Name System) translates human-readable domain names (google.com) to IP addresses (142.250.67.14). DNS Resolution process: (1) Browser checks local cache. (2) OS checks /etc/hosts and local DNS cache. (3) Queries Recursive Resolver (usually your ISP's or 8.8.8.8). (4) Resolver queries Root Name Server (knows TLD servers). (5) Queries TLD Server (.com, .org). (6) Queries Authoritative Name Server for google.com. (7) Returns IP address. Result cached at each level with TTL (Time To Live). DNS record types: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), TXT (verification), NS (name server). DNS over HTTPS (DoH) encrypts DNS queries."
+  }
+]

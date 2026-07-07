@@ -1,0 +1,62 @@
+[
+  {
+    "id": "dsa_001", "topic": "Data Structures", "type": "technical", "difficulty": "easy",
+    "question": "What is the difference between Array and Linked List? When to use each?",
+    "answer": "Array: contiguous memory, O(1) random access by index, O(n) insert/delete in middle, fixed size (static) or dynamic (ArrayList). Cache-friendly. Linked List: nodes scattered in memory connected by pointers, O(n) access by index, O(1) insert/delete at known node, dynamic size. No wasted space. Use Array when: frequent index access, iteration, cache performance matters. Use Linked List when: frequent insert/delete at head/tail, unknown size, implementing queues/stacks. In practice, ArrayList/Python list is used more due to better cache performance for most operations despite O(n) inserts."
+  },
+  {
+    "id": "dsa_002", "topic": "Data Structures", "type": "technical", "difficulty": "medium",
+    "question": "Explain binary search and its time complexity.",
+    "answer": "Binary search finds a target in a SORTED array by repeatedly halving the search space. Algorithm: (1) Set low=0, high=len-1. (2) mid = (low+high)//2. (3) If arr[mid]==target, return mid. (4) If arr[mid]<target, low=mid+1. (5) Else high=mid-1. (6) Repeat until low>high. Time: O(log n) — each step eliminates half the remaining elements. Space: O(1) iterative, O(log n) recursive (stack). Prerequisite: array must be sorted. Used in: searching sorted data, finding insertion point, solving optimisation problems by binary searching the answer space."
+  },
+  {
+    "id": "dsa_003", "topic": "Algorithms", "type": "technical", "difficulty": "medium",
+    "question": "Explain Big O notation. What are common time complexities?",
+    "answer": "Big O describes how an algorithm's performance scales with input size n in the worst case. Common complexities from best to worst: O(1) — constant (array access, hash map lookup). O(log n) — logarithmic (binary search, balanced BST operations). O(n) — linear (linear search, array iteration). O(n log n) — linearithmic (merge sort, heap sort, efficient sorting). O(n²) — quadratic (bubble sort, nested loops). O(2^n) — exponential (recursive fibonacci, subset generation). O(n!) — factorial (permutations). Always optimise your most frequent operations. Space complexity follows the same notation for memory usage."
+  },
+  {
+    "id": "dsa_004", "topic": "Data Structures", "type": "technical", "difficulty": "medium",
+    "question": "What is a hash map? How does it handle collisions?",
+    "answer": "Hash map stores key-value pairs with O(1) average time for get/put/delete. How it works: (1) Hash function converts key to an integer index. (2) Value stored at that index in an underlying array. Collision handling: Chaining — each array slot holds a linked list of entries with the same hash. Open addressing — if slot is taken, probe for next empty slot (linear, quadratic, or double hashing). Load factor: ratio of entries to array size. When load factor exceeds threshold (~0.75), rehashing occurs (double array size, rehash all entries) — amortised O(1). Worst case O(n) if all keys hash to same slot (poor hash function)."
+  },
+  {
+    "id": "dsa_005", "topic": "Data Structures", "type": "technical", "difficulty": "hard",
+    "question": "Explain different tree traversal methods with use cases.",
+    "answer": "For Binary Tree: Inorder (Left→Root→Right): gives sorted order for BST. Preorder (Root→Left→Right): copy/serialize tree, prefix expressions. Postorder (Left→Right→Root): delete tree, postfix expressions, evaluate expression trees. Level-order (BFS, queue): shortest path, level-by-level processing, serialize tree for storage. DFS vs BFS: DFS uses O(h) space (h=height), good for deep trees, searching paths. BFS uses O(w) space (w=width), good for wide trees, finding shortest paths. For BST: search, insert, delete all O(h). Balanced BST (AVL, Red-Black): h=O(log n), guaranteeing O(log n) operations."
+  },
+  {
+    "id": "dsa_006", "topic": "Algorithms", "type": "technical", "difficulty": "hard",
+    "question": "Explain dynamic programming. How do you identify DP problems?",
+    "answer": "Dynamic programming solves complex problems by breaking them into overlapping subproblems and storing results to avoid recomputation. Two conditions: (1) Optimal substructure — optimal solution built from optimal subsolutions. (2) Overlapping subproblems — same subproblems solved multiple times. Approaches: Top-down (memoisation) — recursion + cache. Bottom-up (tabulation) — iterative, fill table from smallest subproblems. Classic problems: Fibonacci, 0/1 Knapsack, Longest Common Subsequence, Edit Distance, Coin Change. Identify DP: 'find min/max/count', 'is it possible', sequences with constraints, grid problems. Start with recursion, then add memoisation."
+  },
+  {
+    "id": "dsa_007", "topic": "Algorithms", "type": "technical", "difficulty": "medium",
+    "question": "What sorting algorithms do you know? Compare their time and space complexities.",
+    "answer": "Bubble Sort: O(n²) time, O(1) space — simple but slow, avoid in production. Selection Sort: O(n²) time, O(1) space — fewer swaps than bubble. Insertion Sort: O(n²) worst, O(n) best (nearly sorted), O(1) space — good for small/nearly-sorted data. Merge Sort: O(n log n) always, O(n) space — stable, good for linked lists, external sorting. Quick Sort: O(n log n) average, O(n²) worst (bad pivot), O(log n) space — fastest in practice, unstable. Heap Sort: O(n log n) always, O(1) space — not cache-friendly. Tim Sort (Python/Java default): O(n log n), stable, handles real-world data well. Use language built-in sort for most cases."
+  },
+  {
+    "id": "dsa_008", "topic": "Data Structures", "type": "technical", "difficulty": "medium",
+    "question": "What is a stack and queue? Where are they used?",
+    "answer": "Stack (LIFO — Last In First Out): push (add top), pop (remove top), peek (see top). O(1) all operations. Uses: function call stack, undo/redo, bracket matching, DFS (recursion), expression evaluation, backtracking. Queue (FIFO — First In First Out): enqueue (add back), dequeue (remove front). O(1) with proper implementation. Uses: BFS graph traversal, task scheduling, print queues, message queues (Kafka, RabbitMQ), CPU scheduling. Deque (double-ended queue): O(1) add/remove from both ends. Priority Queue (Heap): dequeue returns highest/lowest priority element, O(log n). Uses: Dijkstra's algorithm, task scheduling by priority."
+  },
+  {
+    "id": "dsa_009", "topic": "Algorithms", "type": "technical", "difficulty": "hard",
+    "question": "Explain graph algorithms: BFS, DFS, Dijkstra's shortest path.",
+    "answer": "BFS (Breadth-First Search): explores level by level using a queue. O(V+E). Finds shortest path in unweighted graphs. Uses: social networks (degrees of separation), web crawlers, GPS navigation. DFS (Depth-First Search): explores as deep as possible using stack/recursion. O(V+E). Uses: detecting cycles, topological sort, finding connected components, maze solving. Dijkstra's: finds shortest path in weighted graph (non-negative weights) using a min-heap. O((V+E)log V). Process: pick unvisited node with minimum distance, relax all its edges. Uses: GPS, network routing. Bellman-Ford handles negative weights. A* uses heuristics for faster pathfinding."
+  },
+  {
+    "id": "dsa_010", "topic": "Data Structures", "type": "technical", "difficulty": "medium",
+    "question": "What are the different types of trees? Explain BST, AVL, and Heap.",
+    "answer": "BST (Binary Search Tree): left child < node < right child. O(h) search/insert/delete. Degenerate (sorted input) → O(n). AVL Tree: self-balancing BST. Balance factor = |height(left)-height(right)| ≤ 1. Rotations (single/double) maintain balance. O(log n) guaranteed. More balanced than Red-Black but more rotations. Red-Black Tree: self-balancing, less strict than AVL, fewer rotations on insert, used in Java TreeMap/TreeSet. Min/Max Heap: complete binary tree where parent ≤ children (min-heap) or ≥ (max-heap). O(log n) insert, O(1) peek, O(log n) extract-min/max. Used for priority queues, heap sort. B-Tree: used in databases, multiple keys per node, optimised for disk access."
+  },
+  {
+    "id": "dsa_011", "topic": "Algorithms", "type": "technical", "difficulty": "medium",
+    "question": "What is recursion? Explain tail recursion and when to use it.",
+    "answer": "Recursion: a function that calls itself with a smaller input, with a base case to stop. Every recursive solution can be converted to iterative. Components: (1) Base case — termination condition. (2) Recursive case — breaks problem into smaller subproblems. Examples: factorial, fibonacci, tree traversal, merge sort. Risk: stack overflow for deep recursion (Python default limit ~1000 calls). Tail recursion: the recursive call is the LAST operation in the function. Compilers can optimise this into iteration (tail call optimisation — TCO), preventing stack overflow. Python does NOT support TCO. Use iteration or explicit stack for deep recursion in Python. Fibonacci: O(2^n) naive recursion → O(n) with memoisation."
+  },
+  {
+    "id": "dsa_012", "topic": "Algorithms", "type": "technical", "difficulty": "hard",
+    "question": "What are greedy algorithms? Give examples of when they work and when they don't.",
+    "answer": "Greedy algorithms make the locally optimal choice at each step, hoping to reach a globally optimal solution. Simple, fast, but don't always work. When greedy works: Activity Selection Problem (schedule max non-overlapping activities — always pick earliest ending), Huffman Coding (optimal prefix-free encoding), Dijkstra's shortest path, Minimum Spanning Tree (Kruskal's, Prim's), Fractional Knapsack. When greedy fails: 0/1 Knapsack (need DP), Coin Change with arbitrary denominations (e.g., [1,3,4] coins for amount 6 — greedy gives 4+1+1=3 coins, DP gives 3+3=2 coins). Greedy works when problem has the 'greedy choice property' and 'optimal substructure'."
+  }
+]

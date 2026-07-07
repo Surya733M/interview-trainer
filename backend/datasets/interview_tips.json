@@ -1,0 +1,37 @@
+[
+  {
+    "id": "tip_001", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "What are the most important things to do before a technical interview?",
+    "answer": "Preparation checklist: (1) Research the company — products, tech stack, recent news, engineering blog, mission statement. (2) Review the job description — map your experience to each requirement. (3) Revise core CS fundamentals — DSA, OS, DBMS, CN, OOP based on role. (4) Practice coding on a whiteboard or paper — not just IDE. (5) Prepare your project stories in STAR format. (6) Test your setup if remote — camera, mic, internet, IDE. (7) Prepare 5 thoughtful questions to ask. (8) Good sleep the night before. (9) Arrive/log in 10 minutes early. (10) Have a copy of your resume. Remember: interviewers evaluate thinking process, not just final answer."
+  },
+  {
+    "id": "tip_002", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "How should you approach a coding problem in a technical interview?",
+    "answer": "The UMPIRE method: (1) Understand — repeat the problem, ask clarifying questions (data types, edge cases, constraints, expected output format). (2) Match — identify the pattern (sliding window, two pointers, BFS/DFS, DP). (3) Plan — explain your approach before coding. (4) Implement — code cleanly, name variables meaningfully, talk while coding. (5) Review — test with normal case, edge cases (empty, null, single element, large input). (6) Evaluate — analyse time and space complexity. Never jump straight to coding. Thinking out loud scores points even if solution isn't perfect. Ask about constraints: n size determines if O(n²) is acceptable."
+  },
+  {
+    "id": "tip_003", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "What are common interview mistakes to avoid?",
+    "answer": "Top mistakes: (1) Not asking clarifying questions before coding — makes you look impulsive. (2) Staying silent while thinking — always talk through your thought process. (3) Giving up too quickly — say 'let me think of another approach' and iterate. (4) Not testing code — always trace through with an example. (5) Ignoring edge cases — always ask about null inputs, empty arrays, negative numbers. (6) Not knowing your own resume — if it's on your CV, you must be able to explain it. (7) Badmouthing current/previous employer. (8) Being too vague in behavioral answers — use specific examples. (9) Not having questions to ask — shows low interest. (10) Checking phone during interview."
+  },
+  {
+    "id": "tip_004", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "How do you explain a project from your resume in an interview?",
+    "answer": "Use the PAR framework: Problem — what was the challenge being solved (context, scale, constraints)? Action — what specifically DID YOU build/design/implement (tech stack, architecture decisions, why those choices)? Result — what was the measurable outcome (users, performance, business impact)? Prepare for follow-up questions: (1) Why did you choose this tech stack? (2) What would you do differently? (3) What was the hardest part? (4) How did you test it? (5) How does it scale? Practice explaining technical concepts to a non-technical person AND deep-diving for technical interviewers. Have a 30-second, 2-minute, and 5-minute version ready."
+  },
+  {
+    "id": "tip_005", "topic": "Interview Tips", "type": "tips", "difficulty": "medium",
+    "question": "What is system design and how do you approach a system design interview?",
+    "answer": "System design tests your ability to architect large-scale systems. Framework: (1) Clarify requirements — functional (what the system does) and non-functional (scale, latency, availability). (2) Estimate scale — daily active users, requests per second, data storage needs. (3) High-level design — identify main components (client, load balancer, API servers, database, cache, CDN). (4) Detailed design — deep dive into 2-3 critical components the interviewer cares about. (5) Identify bottlenecks — where will it fail at scale? Solutions: caching, sharding, replication, message queues. (6) Summarise tradeoffs made. Practice common designs: URL shortener, Twitter, Netflix, WhatsApp, Uber."
+  },
+  {
+    "id": "tip_006", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "How do you handle a question you don't know the answer to?",
+    "answer": "Be honest but show structured thinking: (1) Say 'That's a great question — I haven't worked with that specifically, but let me think through it logically.' (2) Reason from first principles — what do you know that's related? (3) Describe how you would find the answer if you had access to resources. (4) If it's a concept: 'I know X works similarly, so I'd expect Y to work by...' This demonstrates problem-solving under uncertainty, intellectual honesty, and learning ability — which interviewers value. Never pretend to know something you don't — experienced interviewers will see through it immediately and it damages trust."
+  },
+  {
+    "id": "tip_007", "topic": "Interview Tips", "type": "tips", "difficulty": "easy",
+    "question": "How should you discuss salary negotiation?",
+    "answer": "Negotiation tips: (1) Always negotiate — companies expect it and it's professional. (2) Research market rates first (Glassdoor, AmbitionBox, LinkedIn Salary, Levels.fyi). (3) Give a range, not a single number. (4) Don't give a number first if possible — 'What's the budget range for this role?' (5) Factor in total compensation: base, bonus, ESOPs, health insurance, learning budget, WFH allowance. (6) Don't negotiate against yourself — if they ask for current salary, in many places you don't have to disclose. (7) Be pleasant but direct: 'I've done research and was expecting X. Is there flexibility?' (8) If they can't move on salary, ask about signing bonus, extra vacation, or faster review cycle."
+  }
+]

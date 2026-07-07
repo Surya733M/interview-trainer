@@ -1,0 +1,52 @@
+[
+  {
+    "id": "beh_001", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Tell me about a time you faced a major technical challenge. How did you overcome it?",
+    "answer": "Use STAR method. Strong answer structure: Situation — briefly set context (project, team size, deadline). Task — your specific responsibility. Action — what YOU did (not the team): broke problem into parts, researched solutions, collaborated with senior engineers, wrote tests, iterated. Result — quantify impact: reduced load time by 40%, delivered 2 days early, zero production bugs. Key elements: show problem-solving process, ownership, learning. Common mistake: saying 'we did' instead of 'I did'. Show technical depth but keep it understandable."
+  },
+  {
+    "id": "beh_002", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Describe a situation where you had a conflict with a team member. How did you handle it?",
+    "answer": "STAR structure: Situation — code review disagreement, different technical approaches, missed deadline. Task — resolve professionally while maintaining team productivity. Action — private conversation first, listened to understand their perspective, found common ground, proposed compromise or escalated to manager if needed. Result — resolved professionally, project delivered, relationship maintained or improved. Red flags to avoid: blaming others, saying you never have conflicts, saying you always win. Show: empathy, communication skills, maturity, focus on team over ego."
+  },
+  {
+    "id": "beh_003", "topic": "Behavioral", "type": "behavioral", "difficulty": "easy",
+    "question": "What is your greatest professional achievement?",
+    "answer": "Choose an achievement that: (1) is quantifiable (improved performance by X%, reduced cost by $Y, completed Z weeks early), (2) demonstrates skills relevant to the role, (3) shows your individual contribution clearly. Structure: what was the challenge, what you did specifically, what the measurable result was, what you learned. Example: 'I optimised our database queries at Infosys, reducing API response time from 2.3 seconds to 340ms (85% improvement), which directly improved user retention by 12%. I achieved this by analysing slow query logs, adding proper indexes, and implementing Redis caching.'"
+  },
+  {
+    "id": "beh_004", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Describe a time you had to learn something new quickly. How did you approach it?",
+    "answer": "STAR structure: Situation — new project required unfamiliar technology (specific tech). Task — needed to be productive in a short timeframe (specify). Action — structured approach: official documentation first, hands-on tutorials, built a small proof-of-concept, asked senior colleagues focused questions, used team's existing codebase as reference. Result — delivered the feature on time, and you can quantify your learning speed. Show: learning agility, resourcefulness, self-direction. Mention specific resources (official docs, specific courses). This question tests how you handle unknowns."
+  },
+  {
+    "id": "beh_005", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Tell me about a time you failed. What did you learn?",
+    "answer": "This is a test of self-awareness and growth mindset. Structure: be honest about a real failure (not fake humility). Describe what went wrong and why. Most importantly: show what you learned and how you changed your behaviour. Example: underestimated a task, missed a deadline, caused a production incident. Show: you take ownership (not blame external factors), you learned something concrete, you implemented a process change. Avoid: saying you've never failed, trivial failures, failures that show poor judgment for the role. End positively: how the experience made you better."
+  },
+  {
+    "id": "beh_006", "topic": "Behavioral", "type": "behavioral", "difficulty": "easy",
+    "question": "How do you handle tight deadlines or working under pressure?",
+    "answer": "Strong answer components: (1) Prioritisation — use frameworks like MoSCoW (Must have, Should have, Could have, Won't have) or impact/effort matrix. (2) Communication — proactively inform stakeholders if deadline is at risk, early rather than late. (3) Breakdown — divide large work into small deliverable chunks. (4) Focus — eliminate distractions, use time-blocking. (5) Ask for help — identify blockers early and escalate. Give a specific example from experience. Show you stay calm and methodical under pressure rather than panicking. Avoid saying 'I work better under pressure' — it's cliché."
+  },
+  {
+    "id": "beh_007", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Describe a time you took initiative beyond your assigned responsibilities.",
+    "answer": "Show proactivity and ownership mindset. STAR structure: identify a problem or opportunity that was not your direct responsibility, explain why you decided to act, describe what you did (and how you managed it alongside existing work), quantify the result. Examples: noticed a performance bottleneck and fixed it, created internal documentation that helped the whole team, automated a repetitive manual process, mentored a new joiner, proposed a new feature that got implemented. This distinguishes go-getters from people who do just enough. Show: initiative, ownership, impact orientation."
+  },
+  {
+    "id": "beh_008", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "How do you work in a team? Tell me about a successful team project.",
+    "answer": "Key dimensions to demonstrate: communication (regular standups, clear documentation), collaboration (helped teammates, pair programming, code reviews), reliability (delivered your commitments), adaptability (handled changing requirements). STAR: describe a cross-functional project, your specific role, how you collaborated with others (designers, PMs, other engineers), challenges in the team dynamic, result. Show: you're a team player who also takes individual ownership. Mention specific collaboration tools (Jira, Confluence, GitHub) to show professional experience. Avoid vague 'we worked well together' — be specific about your contribution."
+  },
+  {
+    "id": "beh_009", "topic": "Behavioral", "type": "behavioral", "difficulty": "easy",
+    "question": "Why do you want to work at this company?",
+    "answer": "Research-based answer shows genuine interest. Structure: (1) Company-specific reason — mention specific products, culture, mission, recent news, technology stack that genuinely appeals to you. (2) Role-specific reason — how this role aligns with your skills and career growth direction. (3) Personal fit — what excites you about the team or domain. Avoid: generic answers ('great company', 'good salary'), saying you just need a job, negative reasons ('I want to leave current company because...'). Research: company blog, engineering blog, Glassdoor, LinkedIn, recent press releases, products you've used personally."
+  },
+  {
+    "id": "beh_010", "topic": "Behavioral", "type": "behavioral", "difficulty": "medium",
+    "question": "Tell me about a time you gave or received constructive feedback.",
+    "answer": "For giving: STAR — identified a colleague's issue (code quality, communication), chose right time and private setting, gave specific and actionable feedback ('I noticed X, the impact is Y, have you considered Z?'), followed up. Show respect and empathy. For receiving: show you welcome feedback, describe specific feedback you received, how you processed it without being defensive, concrete steps you took to improve, outcome. This question tests emotional intelligence and growth mindset. Red flags: saying you've never needed feedback, getting defensive when receiving it, giving harsh feedback without empathy."
+  }
+]

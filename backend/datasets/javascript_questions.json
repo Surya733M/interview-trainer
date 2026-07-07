@@ -1,0 +1,77 @@
+[
+  {
+    "id": "js_001", "topic": "JavaScript", "type": "technical", "difficulty": "easy",
+    "question": "What is the difference between var, let, and const in JavaScript?",
+    "answer": "var: function-scoped, hoisted (moved to top of function), can be re-declared and re-assigned, old way. let: block-scoped (inside {}), not hoisted to top, can be re-assigned but not re-declared in same scope. const: block-scoped, cannot be re-assigned after declaration (but object properties CAN be mutated). Best practice: always use const by default, use let when you need to reassign, avoid var. Example: const PI=3.14; let count=0; count++; // OK. PI=3; // Error."
+  },
+  {
+    "id": "js_002", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "Explain closures in JavaScript with an example.",
+    "answer": "A closure is a function that remembers the variables from its outer scope even after the outer function has returned. Example: function counter() { let count=0; return function() { count++; return count; }; } const c = counter(); c(); // 1, c(); // 2. The inner function closes over 'count'. Practical uses: data privacy (private variables), factory functions, event handlers, partial application/currying. Every function in JavaScript forms a closure over its surrounding scope."
+  },
+  {
+    "id": "js_003", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "What is the event loop in JavaScript? How does it work?",
+    "answer": "JavaScript is single-threaded but handles async operations via the event loop. Components: (1) Call Stack — where code executes synchronously. (2) Web APIs — browser handles async tasks (setTimeout, fetch, DOM events). (3) Callback Queue — completed callbacks wait here. (4) Microtask Queue — Promises and queueMicrotask callbacks (higher priority than callback queue). (5) Event Loop — continuously checks if call stack is empty, then moves tasks from queues to the stack. Microtasks run before macrotasks. This is why Promise.then() runs before setTimeout."
+  },
+  {
+    "id": "js_004", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "Explain Promise and async/await in JavaScript.",
+    "answer": "Promise: represents a value that will be available in the future. States: pending, fulfilled, rejected. .then() handles success, .catch() handles errors, .finally() always runs. Promise.all([p1,p2]) waits for all. async/await: syntactic sugar over Promises making async code look synchronous. async function always returns a Promise. await pauses execution until the Promise resolves. Example: async function fetchUser(id) { try { const res = await fetch('/api/users/'+id); return await res.json(); } catch(e) { console.error(e); } }. Use try/catch with async/await."
+  },
+  {
+    "id": "js_005", "topic": "JavaScript", "type": "technical", "difficulty": "hard",
+    "question": "What is prototypal inheritance in JavaScript?",
+    "answer": "JavaScript uses prototypal inheritance — objects inherit directly from other objects via a prototype chain. Every object has a __proto__ property pointing to its prototype. When you access a property, JS looks up the chain until it finds it or reaches null. class syntax (ES6) is just syntactic sugar over prototypes. Example: class Animal { speak() { return 'sound'; } } class Dog extends Animal { speak() { return 'woof'; } }. Object.create(proto) creates an object with proto as its prototype. Object.getPrototypeOf(obj) returns the prototype."
+  },
+  {
+    "id": "js_006", "topic": "JavaScript", "type": "technical", "difficulty": "easy",
+    "question": "What are arrow functions and how are they different from regular functions?",
+    "answer": "Arrow functions (=>) are a shorter syntax for functions. Key differences from regular functions: (1) No own 'this' binding — they inherit 'this' from the enclosing scope (lexical this). (2) Cannot be used as constructors (no new). (3) No 'arguments' object. (4) Cannot be used as generators. Example: const add = (a,b) => a+b; Single param: x => x*2; Multi-line: (a,b) => { const sum=a+b; return sum; }. The lexical 'this' makes arrow functions ideal for callbacks and class methods."
+  },
+  {
+    "id": "js_007", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "Explain the difference between == and === in JavaScript.",
+    "answer": "== (loose equality): compares values after type coercion. JavaScript converts types to match before comparing. Example: '5'==5 is true, null==undefined is true, 0==false is true. === (strict equality): compares both value AND type. No coercion. '5'===5 is false, null===undefined is false. Always use === in production code to avoid unexpected bugs from type coercion. The only exception: x==null checks for both null and undefined simultaneously."
+  },
+  {
+    "id": "js_008", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "What are JavaScript modules (ES6)? How do import/export work?",
+    "answer": "ES6 modules allow splitting code into reusable files. Named exports: export const PI=3.14; export function add(a,b){return a+b;}. Default export: export default class MyClass{}. Named import: import {PI, add} from './math.js'. Default import: import MyClass from './MyClass.js'. Import all: import * as math from './math.js'. Benefits: better code organisation, explicit dependencies, tree-shaking (bundlers remove unused exports). In Node.js, use .mjs extension or set type:'module' in package.json. CommonJS (require/module.exports) is older Node.js module system."
+  },
+  {
+    "id": "js_009", "topic": "JavaScript", "type": "technical", "difficulty": "hard",
+    "question": "What is debouncing and throttling? When to use each?",
+    "answer": "Both limit how often a function executes. Debouncing: delays execution until after a specified time has passed since the LAST call. If called again before timeout, timer resets. Use for: search input (wait until user stops typing), window resize handlers, form validation. Throttling: ensures a function executes at most once every specified time period regardless of how many times it's called. Use for: scroll event handlers, API rate limiting, button click spam prevention. Example debounce: let timer; function debounce(fn, delay) { clearTimeout(timer); timer=setTimeout(fn, delay); }"
+  },
+  {
+    "id": "js_010", "topic": "JavaScript", "type": "technical", "difficulty": "medium",
+    "question": "What is the spread operator and destructuring in JavaScript?",
+    "answer": "Spread operator (...): expands an iterable into individual elements. Array spread: const c=[...a,...b] merges arrays. Object spread: const merged={...obj1,...obj2}. Function: Math.max(...nums). Rest parameter: function sum(...nums) collects remaining args into array. Destructuring: extracts values from arrays/objects. Array: const [a,b,c]=[1,2,3]. Object: const {name, age}=person. With rename: const {name:n}=person. With default: const {age=18}=person. Nested: const {address:{city}}=person. Very useful for React props and API responses."
+  },
+  {
+    "id": "react_001", "topic": "React", "type": "technical", "difficulty": "easy",
+    "question": "What is React and what problem does it solve?",
+    "answer": "React is a JavaScript library by Meta for building user interfaces. It solves: (1) Manual DOM manipulation is slow and error-prone — React uses a Virtual DOM that batches updates and only changes what's necessary. (2) Code organisation — React's component model lets you build reusable UI pieces. (3) State management — React's useState/useReducer hooks manage UI state predictably. (4) One-way data flow — data flows parent → child via props, making data flow predictable. React renders a component tree based on state changes, not imperative DOM commands."
+  },
+  {
+    "id": "react_002", "topic": "React", "type": "technical", "difficulty": "easy",
+    "question": "What are React hooks? Name the most important ones.",
+    "answer": "Hooks are functions that let functional components use React features previously only available in class components. Most important: useState(initialValue) — local component state, returns [state, setter]. useEffect(fn, deps) — side effects (API calls, subscriptions, timers), runs after render. useContext(Context) — read context value without prop drilling. useRef(initial) — mutable ref that doesn't trigger re-render (DOM refs, previous values). useMemo(fn, deps) — memoises expensive calculations. useCallback(fn, deps) — memoises functions to prevent child re-renders. Rules: only call at top level, only in React functions."
+  },
+  {
+    "id": "react_003", "topic": "React", "type": "technical", "difficulty": "medium",
+    "question": "Explain React's virtual DOM and reconciliation.",
+    "answer": "Virtual DOM: a JavaScript object representation of the real DOM kept in memory. When state changes, React creates a new virtual DOM tree. Reconciliation: React's diffing algorithm compares old vs new virtual DOM trees, finds minimal set of changes (diffing), then applies only those changes to the real DOM (batched). This is much faster than re-rendering the entire real DOM. Key prop helps React identify which list items changed — always use unique, stable keys in lists (not array index). React 18 adds concurrent rendering — can interrupt and resume rendering."
+  },
+  {
+    "id": "react_004", "topic": "React", "type": "technical", "difficulty": "medium",
+    "question": "What is the difference between props and state in React?",
+    "answer": "Props (properties): data passed FROM parent TO child components. Read-only inside the receiving component — child cannot modify its own props. Used for component configuration and data sharing. State: data managed INSIDE a component with useState/useReducer. Mutable — component can update its own state. State changes trigger re-renders. When to use: use props when data comes from outside, use state for data the component itself manages. Lifting state up: when two siblings need shared state, move it to their common parent and pass down as props."
+  },
+  {
+    "id": "react_005", "topic": "React", "type": "technical", "difficulty": "hard",
+    "question": "Explain useEffect dependencies array. What are common mistakes?",
+    "answer": "useEffect(fn, deps): fn runs after every render where deps changed. [] empty array: run once after mount (like componentDidMount). [a,b]: run when a or b changes. No array: run after every render. Common mistakes: (1) Missing dependencies — ESLint react-hooks/exhaustive-deps rule catches this. (2) Infinite loops — if effect updates a state that's in deps, causing re-render → effect → re-render loop. (3) Stale closures — capturing outdated state/props values. (4) Not returning cleanup — memory leaks from subscriptions/timers. Cleanup: return () => subscription.unsubscribe() to run on unmount."
+  }
+]

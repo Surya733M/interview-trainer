@@ -1,0 +1,162 @@
+[
+  {
+    "id": "py_001",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "What are Python's key features that make it popular?",
+    "answer": "Python is popular because of: (1) Simple, readable syntax close to English. (2) Interpreted language — no compilation needed. (3) Dynamically typed — no need to declare variable types. (4) Huge standard library and ecosystem (pip packages). (5) Supports multiple paradigms: OOP, functional, procedural. (6) Platform independent. (7) Strong community support. Used in web dev, data science, AI/ML, automation, scripting."
+  },
+  {
+    "id": "py_002",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "What is the difference between a list and a tuple in Python?",
+    "answer": "List: mutable (can be changed after creation), defined with [], slower, uses more memory. Example: [1, 2, 3]. Tuple: immutable (cannot be changed after creation), defined with (), faster, uses less memory. Example: (1, 2, 3). Use tuples for fixed data (coordinates, RGB values), lists for data that changes. Tuples can be used as dictionary keys, lists cannot."
+  },
+  {
+    "id": "py_003",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "Explain Python decorators with an example.",
+    "answer": "A decorator is a function that wraps another function to add behaviour without modifying its source code. Syntax: @decorator_name above a function definition. Example: @app.route('/') in Flask adds routing. Custom example: def timer(func): def wrapper(*args, **kwargs): start=time.time(); result=func(*args,**kwargs); print(time.time()-start); return result; return wrapper. Then @timer def my_func(): pass. Used for logging, authentication, caching, rate limiting."
+  },
+  {
+    "id": "py_004",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What is the difference between *args and **kwargs in Python?",
+    "answer": "*args allows a function to accept any number of positional arguments as a tuple. **kwargs allows any number of keyword arguments as a dictionary. Example: def func(*args, **kwargs): print(args, kwargs). Call: func(1,2,3, name='Alice') → args=(1,2,3), kwargs={'name':'Alice'}. Use *args when you don't know how many positional args, **kwargs for named optional params. Both can be used together: def func(*args, **kwargs)."
+  },
+  {
+    "id": "py_005",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What are Python generators and when should you use them?",
+    "answer": "Generators are functions that use 'yield' instead of 'return' to produce a sequence of values lazily — one at a time — without storing the entire sequence in memory. Example: def count_up(n): for i in range(n): yield i. Use generators when: (1) dealing with large datasets that don't fit in memory, (2) reading large files line by line, (3) streaming data. They are memory efficient because values are computed on demand. Generator expressions: (x*2 for x in range(1000))."
+  },
+  {
+    "id": "py_006",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "Explain Python's GIL (Global Interpreter Lock).",
+    "answer": "The GIL is a mutex in CPython that allows only one thread to execute Python bytecode at a time, even on multi-core systems. This means Python threads cannot achieve true parallelism for CPU-bound tasks. However, the GIL is released during I/O operations, so multithreading works well for I/O-bound tasks (network calls, file reads). For CPU-bound parallelism, use the multiprocessing module (separate processes, separate GILs) or async/await for I/O concurrency."
+  },
+  {
+    "id": "py_007",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "hard",
+    "question": "What is the difference between deep copy and shallow copy?",
+    "answer": "Shallow copy creates a new object but inserts references to the original nested objects. Changes to nested objects in the copy affect the original. Use: import copy; new = copy.copy(original) or list.copy(). Deep copy creates a completely independent copy — nested objects are also copied recursively. Changes don't affect the original. Use: copy.deepcopy(original). Example: a=[[1,2],[3,4]]; b=a.copy(); b[0].append(5) → a[0] is also changed (shallow). With deepcopy, a[0] stays unchanged."
+  },
+  {
+    "id": "py_008",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "What are Python list comprehensions? Give an example.",
+    "answer": "List comprehension is a concise way to create lists from iterables. Syntax: [expression for item in iterable if condition]. Example: squares = [x**2 for x in range(10) if x%2==0] produces [0,4,16,36,64]. Equivalent to: squares=[]; for x in range(10): if x%2==0: squares.append(x**2). Comprehensions are faster and more Pythonic than loops. Also available: dict comprehension {k:v for k,v in items}, set comprehension {x for x in items}."
+  },
+  {
+    "id": "py_009",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "Explain object-oriented programming concepts in Python with examples.",
+    "answer": "Python supports full OOP: (1) Class: blueprint for objects. class Dog: def __init__(self,name): self.name=name. (2) Object: instance of a class. d = Dog('Rex'). (3) Encapsulation: bundling data and methods, private attrs with _name. (4) Inheritance: class Labrador(Dog): pass — inherits Dog's methods. (5) Polymorphism: different classes implementing the same method name differently. (6) Abstraction: hiding implementation details using abstract base classes (abc module)."
+  },
+  {
+    "id": "py_010",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "hard",
+    "question": "What are Python metaclasses?",
+    "answer": "A metaclass is the class of a class — it controls how classes are created. Every class in Python is an instance of its metaclass (default: type). You can create custom metaclasses by inheriting from type and overriding __new__ or __init__. Use cases: enforcing coding standards (all methods must have docstrings), singleton pattern, ORM frameworks (Django/SQLAlchemy use metaclasses to map classes to DB tables). Example: class SingletonMeta(type): _instances={}; def __call__(cls,*a,**k): if cls not in cls._instances: cls._instances[cls]=super().__call__(*a,**k); return cls._instances[cls]."
+  },
+  {
+    "id": "py_011",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What is the difference between 'is' and '==' in Python?",
+    "answer": "'==' checks value equality — whether two objects have the same value. 'is' checks identity equality — whether two variables point to the same object in memory. Example: a=[1,2,3]; b=[1,2,3]; a==b is True (same values), a is b is False (different objects). a=b; a is b is now True (same object). For None checks, always use 'is None', not '== None', because == can be overridden. Small integers (-5 to 256) and short strings are cached by Python, so 'is' may return True unexpectedly."
+  },
+  {
+    "id": "py_012",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "How does Python handle exceptions? Explain try-except-else-finally.",
+    "answer": "try: code that might raise an exception. except ExceptionType as e: handles the exception. else: runs only if NO exception occurred in try. finally: always runs, used for cleanup (closing files, DB connections). Example: try: f=open('file.txt'); data=f.read() except FileNotFoundError: print('File missing') except Exception as e: print(f'Error: {e}') else: print('Success') finally: f.close() if 'f' in locals() else None. Can raise custom exceptions: raise ValueError('Invalid input'). Create custom exceptions by inheriting from Exception."
+  },
+  {
+    "id": "py_013",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What are Python context managers and the 'with' statement?",
+    "answer": "Context managers handle setup and cleanup automatically using the 'with' statement. The object must implement __enter__ (setup) and __exit__ (cleanup). Example: with open('file.txt') as f: data = f.read() — file is automatically closed even if an exception occurs. Create custom context managers using the contextlib.contextmanager decorator or by implementing __enter__/__exit__. Common uses: file handling, database connections, locks, temporary directory changes. The 'with' statement ensures resources are always properly released."
+  },
+  {
+    "id": "py_014",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "hard",
+    "question": "Explain async/await in Python. When would you use it?",
+    "answer": "async/await is Python's syntax for asynchronous programming using coroutines. async def defines a coroutine function. await pauses execution until an async operation completes. Uses an event loop (asyncio) to run multiple coroutines concurrently in a single thread. Use when: making multiple HTTP requests simultaneously, handling many concurrent I/O operations. Example: async def fetch(url): async with aiohttp.ClientSession() as s: r = await s.get(url); return await r.json(). asyncio.run(fetch(url)). Not useful for CPU-bound work — use multiprocessing for that."
+  },
+  {
+    "id": "py_015",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "What is PEP 8 and why is it important?",
+    "answer": "PEP 8 is Python's official style guide — a set of conventions for writing readable Python code. Key rules: use 4 spaces for indentation (not tabs), lines max 79 chars, two blank lines between top-level functions/classes, one blank line between methods, use snake_case for variables/functions, PascalCase for classes, UPPER_CASE for constants, spaces around operators (a = 1 not a=1), single blank line before return statements. Tools: flake8, pylint, black (auto-formatter) enforce PEP 8. Important because consistent code is easier to read, review, and maintain."
+  },
+  {
+    "id": "py_016",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What is the difference between pickling and JSON serialisation in Python?",
+    "answer": "JSON serialisation (json module) converts Python objects to a JSON string — only supports basic types (dict, list, str, int, float, bool, None). Human readable, language-independent, safe to share. Pickling (pickle module) converts any Python object (including custom classes, functions, lambdas) to binary bytes. Python-specific, not human-readable, can execute arbitrary code when unpickling (security risk — never unpickle untrusted data). Use JSON for web APIs and data sharing; use pickle for caching Python-specific objects like ML models (though joblib is preferred for that)."
+  },
+  {
+    "id": "py_017",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "easy",
+    "question": "How do you manage packages and virtual environments in Python?",
+    "answer": "Virtual environments isolate project dependencies so different projects don't conflict. Create: python -m venv venv. Activate: Windows: .\\venv\\Scripts\\activate, Linux/Mac: source venv/bin/activate. Deactivate: deactivate. pip install package_name to install packages. pip freeze > requirements.txt saves all dependencies. pip install -r requirements.txt installs from the file. Modern alternatives: Poetry (pyproject.toml), pipenv (Pipfile). For IBM Cloud deployment, requirements.txt is the standard."
+  },
+  {
+    "id": "py_018",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "Explain Python's memory management and garbage collection.",
+    "answer": "Python uses reference counting as its primary memory management mechanism — every object has a count of how many references point to it. When the count reaches zero, the memory is freed immediately. For cyclic references (a→b→a), Python has a cyclic garbage collector (gc module) that runs periodically. Memory is managed by Python's memory allocator, not directly by the OS. You can manually trigger GC with gc.collect(). The sys.getsizeof() function shows object memory usage. CPython (the standard implementation) uses a private heap for Python objects."
+  },
+  {
+    "id": "py_019",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "hard",
+    "question": "What are Python slots (__slots__)? When should you use them?",
+    "answer": "__slots__ restricts the attributes a class instance can have, storing them in a fixed-size array instead of a __dict__. Benefits: (1) ~40-50% less memory per instance (no __dict__ overhead), (2) faster attribute access. Drawbacks: (1) can't add new attributes dynamically, (2) complicates multiple inheritance. Use when creating millions of small objects (e.g., points in a simulation, database rows). Example: class Point: __slots__=['x','y']; def __init__(self,x,y): self.x=x; self.y=y. Without slots, each instance has a __dict__ which is a hash map using significant memory."
+  },
+  {
+    "id": "py_020",
+    "topic": "Python",
+    "type": "technical",
+    "difficulty": "medium",
+    "question": "What is FastAPI and why is it better than Flask for modern APIs?",
+    "answer": "FastAPI is a modern Python web framework for building APIs. Key advantages over Flask: (1) Built-in async support (async/await) for handling many concurrent requests efficiently. (2) Automatic request validation using Pydantic — no manual validation code. (3) Auto-generated OpenAPI/Swagger documentation at /docs. (4) Type hints throughout = better IDE support. (5) Significantly faster performance (comparable to Node.js). (6) Built-in dependency injection system. Flask advantages: simpler, more mature ecosystem, more flexibility. FastAPI is preferred for new production APIs, microservices, and AI/ML model serving."
+  }
+]
