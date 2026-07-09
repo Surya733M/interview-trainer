@@ -1,17 +1,12 @@
 """
-services/interview_service.py — Interview Session Business Logic
-=================================================================
-Placeholder service — fully implemented in Steps 14-17.
+services/interview_service.py — Full Interview Engine (Steps 15-17)
+=====================================================================
+Real implementation replacing the placeholder:
+  - Step 15: IBM Granite generates personalised questions via RAG
+  - Step 16: Mock interview session management
+  - Step 17: IBM Granite evaluates every answer with scores + feedback
 
-Right now it:
-  - Creates an interview record in the database
-  - Returns sample questions so the API is testable end-to-end
-  - Accepts answers and returns placeholder feedback
-
-Later steps will replace the placeholder logic with:
-  - RAG retrieval (Step 13)
-  - IBM Granite question generation (Step 15)
-  - IBM Granite answer evaluation (Step 17)
+Falls back to curated sample questions when Granite is unavailable.
 """
 
 import json
@@ -27,49 +22,18 @@ from app.models.user import User
 from app.utils.exceptions import NotFoundError, PermissionDeniedError, ValidationError
 from app.utils.logger import logger
 
-
-# ── Sample questions (replaced by Granite in Step 15) ────────────────────────
-SAMPLE_QUESTIONS = [
-    {
-        "id": 1,
-        "question": "Tell me about yourself and your background.",
-        "type": "hr",
-        "difficulty": "easy",
-        "topic": "Introduction",
-        "hint": "Keep it under 2 minutes. Cover education, experience, and why you want this role.",
-    },
-    {
-        "id": 2,
-        "question": "What are your strongest technical skills and how have you applied them?",
-        "type": "technical",
-        "difficulty": "medium",
-        "topic": "Skills",
-        "hint": "Give specific examples with measurable outcomes.",
-    },
-    {
-        "id": 3,
-        "question": "Describe a challenging project you worked on. What was your approach?",
-        "type": "behavioral",
-        "difficulty": "medium",
-        "topic": "Problem Solving",
-        "hint": "Use the STAR method: Situation, Task, Action, Result.",
-    },
-    {
-        "id": 4,
-        "question": "Where do you see yourself in 5 years?",
-        "type": "hr",
-        "difficulty": "easy",
-        "topic": "Career Goals",
-        "hint": "Align your answer with the company's growth opportunities.",
-    },
-    {
-        "id": 5,
-        "question": "Explain the difference between REST and GraphQL APIs.",
-        "type": "technical",
-        "difficulty": "medium",
-        "topic": "Web APIs",
-        "hint": "Cover: request structure, over-fetching, use cases.",
-    },
+# ── Sample fallback questions (used when Granite unavailable) ─────────────────
+FALLBACK_QUESTIONS = [
+    {"id":1,"question":"Tell me about yourself and your technical background.","type":"hr","difficulty":"easy","topic":"Introduction","hint":"Keep it under 2 minutes. Present-Past-Future structure.","model_answer":"A strong answer covers current skills, key past experiences with results, and enthusiasm for this specific role."},
+    {"id":2,"question":"What are your strongest technical skills? Give a real example of applying them.","type":"technical","difficulty":"medium","topic":"Technical Skills","hint":"Be specific — name the tech, the problem, the result.","model_answer":"Name 2-3 skills, describe a specific project or problem, quantify the outcome."},
+    {"id":3,"question":"Describe a challenging bug you debugged. What was your process?","type":"technical","difficulty":"medium","topic":"Problem Solving","hint":"Show systematic debugging methodology.","model_answer":"Reproduce → isolate → hypothesise → test → fix → prevent. Show systematic thinking."},
+    {"id":4,"question":"Tell me about a time you worked under a tight deadline. How did you handle it?","type":"behavioral","difficulty":"medium","topic":"Time Management","hint":"Use STAR. Show prioritisation skills.","model_answer":"STAR: specific situation, your prioritisation approach, concrete actions, on-time delivery."},
+    {"id":5,"question":"Where do you see yourself in 3 years?","type":"hr","difficulty":"easy","topic":"Career Goals","hint":"Align with company's growth direction.","model_answer":"Show ambition + realism: master this role, take ownership, grow toward senior/lead."},
+    {"id":6,"question":"Explain the difference between REST and GraphQL APIs.","type":"technical","difficulty":"medium","topic":"Web APIs","hint":"Cover: request model, over-fetching, use cases.","model_answer":"REST: multiple endpoints, fixed response shapes. GraphQL: single endpoint, client specifies exact data needed. REST for simple APIs, GraphQL for complex clients."},
+    {"id":7,"question":"What is your approach to writing clean, maintainable code?","type":"technical","difficulty":"medium","topic":"Code Quality","hint":"Mention SOLID, DRY, testing, documentation.","model_answer":"Meaningful names, single responsibility, small functions, tests, code reviews, consistent style (linter)."},
+    {"id":8,"question":"Describe a time you disagreed with a teammate's technical decision. What did you do?","type":"behavioral","difficulty":"medium","topic":"Collaboration","hint":"Show professional disagreement and resolution.","model_answer":"Listen to understand, present data-backed counter-argument, agree to try both if unsure, accept team decision gracefully."},
+    {"id":9,"question":"How do you stay updated with new technologies?","type":"hr","difficulty":"easy","topic":"Learning","hint":"Show specific, credible sources and hands-on learning.","model_answer":"Official docs, engineering blogs, build side projects with new tech, contribute to open source."},
+    {"id":10,"question":"What questions do you have for us?","type":"hr","difficulty":"easy","topic":"Engagement","hint":"3-5 thoughtful questions show genuine interest.","model_answer":"Ask about team culture, tech stack choices, onboarding, growth opportunities, biggest current challenges."},
 ]
 
 
@@ -79,10 +43,10 @@ async def create_interview_session(
     db: Session,
 ) -> InterviewStartResponse:
     """
-    Create a new interview session.
-    Step 15 will replace SAMPLE_QUESTIONS with Granite-generated ones.
+    Create a new interview session with IBM Granite-generated questions.
+    Falls back to curated questions if Granite is unavailable.
     """
-    # Verify the resume exists and belongs to this user
+    # Verify the resume belongs to this user
     resume = db.query(Resume).filter(
         Resume.id == request.resume_id,
         Resume.user_id == current_user.id,
@@ -90,10 +54,17 @@ async def create_interview_session(
     if not resume:
         raise NotFoundError("Resume")
 
-    # TODO Step 15: call granite_service to generate real questions
-    questions = SAMPLE_QUESTIONS[:request.num_technical + request.num_behavioral + request.num_hr]
+    # Try Granite question generation (RAG-powered)
+    questions = await _generate_questions_with_granite(
+        resume=resume,
+        job_title=request.job_title,
+        experience_level=request.experience_level,
+        num_technical=request.num_technical,
+        num_behavioral=request.num_behavioral,
+        num_hr=request.num_hr,
+    )
 
-    # Create interview record
+    # Save interview to DB
     interview = Interview(
         user_id=current_user.id,
         resume_id=request.resume_id,
@@ -108,14 +79,94 @@ async def create_interview_session(
     db.commit()
     db.refresh(interview)
 
-    first_q = Question(**questions[0])
+    logger.info(f"Interview {interview.id} created with {len(questions)} questions.")
 
     return InterviewStartResponse(
         interview_id=interview.id,
         job_title=interview.job_title,
         total_questions=len(questions),
-        first_question=first_q,
+        first_question=Question(**questions[0]),
     )
+
+
+async def _generate_questions_with_granite(
+    resume,
+    job_title: str,
+    experience_level: str,
+    num_technical: int,
+    num_behavioral: int,
+    num_hr: int,
+) -> list:
+    """Call the RAG pipeline + Granite to generate personalised questions."""
+    try:
+        from app.rag.retriever import retrieve_relevant_context, ensure_knowledge_base_populated
+        from app.prompts.question_gen import build_question_generation_prompt, format_rag_context
+        from app.services.granite_service import granite
+
+        # Ensure vector DB is populated
+        ensure_knowledge_base_populated()
+
+        # Get relevant context from vector DB
+        skills = json.loads(resume.skills_json or "[]")
+        retrieved = retrieve_relevant_context(
+            resume_text=resume.parsed_text or "",
+            job_title=job_title,
+            skills=skills,
+            n_results=10,
+        )
+
+        # Build RAG-augmented prompt
+        rag_ctx = format_rag_context(retrieved)
+        prompt  = build_question_generation_prompt(
+            job_title=job_title,
+            skills=skills,
+            experience_level=experience_level,
+            resume_summary=resume.parsed_text or "",
+            rag_context=rag_ctx,
+            num_technical=num_technical,
+            num_behavioral=num_behavioral,
+            num_hr=num_hr,
+        )
+
+        # Call IBM Granite
+        if granite.is_available:
+            result = granite.generate_json(prompt)
+            if isinstance(result, list) and len(result) >= 3:
+                # Validate and normalise Granite output
+                questions = _normalise_questions(result)
+                if questions:
+                    logger.info(f"Granite generated {len(questions)} questions.")
+                    return questions
+
+        logger.warning("Granite unavailable or returned invalid output. Using fallback questions.")
+
+    except Exception as e:
+        logger.error(f"RAG/Granite question generation failed: {e}. Using fallback.")
+
+    # Return curated fallback questions
+    total = num_technical + num_behavioral + num_hr
+    return FALLBACK_QUESTIONS[:total]
+
+
+def _normalise_questions(raw: list) -> list:
+    """Validate and normalise Granite-generated question objects."""
+    required = ["question", "type", "difficulty", "topic"]
+    valid    = []
+    for i, q in enumerate(raw, 1):
+        if not isinstance(q, dict):
+            continue
+        if not all(k in q for k in required):
+            continue
+        valid.append({
+            "id":           i,
+            "question":     str(q.get("question", ""))[:500],
+            "type":         q.get("type", "technical"),
+            "difficulty":   q.get("difficulty", "medium"),
+            "topic":        str(q.get("topic", "General"))[:50],
+            "hint":         str(q.get("hint", ""))[:200],
+            "model_answer": str(q.get("model_answer", ""))[:500],
+        })
+    return valid
 
 
 async def process_answer(
@@ -124,8 +175,8 @@ async def process_answer(
     db: Session,
 ) -> AnswerFeedback:
     """
-    Process a submitted answer.
-    Step 17 will replace placeholder scores with Granite evaluation.
+    Evaluate a submitted answer using IBM Granite.
+    Falls back to rule-based scoring if Granite is unavailable.
     """
     interview = db.query(Interview).filter(Interview.id == request.interview_id).first()
     if not interview:
@@ -133,73 +184,116 @@ async def process_answer(
     if interview.user_id != current_user.id:
         raise PermissionDeniedError()
     if interview.status == "completed":
-        raise ValidationError("This interview is already completed")
+        raise ValidationError("This interview is already completed.")
 
     questions = json.loads(interview.questions_json)
-
-    # Validate question index
     if request.question_index >= len(questions):
-        raise ValidationError("Invalid question index")
+        raise ValidationError("Invalid question index.")
 
     current_q = questions[request.question_index]
 
-    # TODO Step 17: call evaluation_service to get real Granite scores
-    # Placeholder: give a random-ish score based on answer length
-    answer_len = len(request.answer_text.split())
-    base_score = min(10.0, max(4.0, answer_len / 20.0 * 10.0))
+    # Get AI evaluation
+    scores, strengths, improvements, model_answer = await _evaluate_answer(
+        question=current_q.get("question", ""),
+        question_type=current_q.get("type", "hr"),
+        answer=request.answer_text,
+        job_title=interview.job_title,
+        experience_level=interview.experience_level,
+    )
 
-    scores = {
-        "technical":     round(base_score * 0.9, 1),
-        "grammar":       round(base_score * 1.0, 1),
-        "communication": round(base_score * 0.95, 1),
-        "star_method":   round(base_score * 0.85, 1),
-        "completeness":  round(base_score * 0.9, 1),
-    }
     overall = round(sum(scores.values()) / len(scores), 1)
 
-    # Save the answer
+    # Save to DB
     answer = Answer(
         interview_id=interview.id,
         question_index=request.question_index,
-        question_text=current_q["question"],
+        question_text=current_q.get("question", ""),
         answer_text=request.answer_text,
-        technical_score=scores["technical"],
-        grammar_score=scores["grammar"],
-        communication_score=scores["communication"],
-        star_score=scores["star_method"],
-        completeness_score=scores["completeness"],
+        technical_score=scores.get("technical", 0),
+        grammar_score=scores.get("grammar", 0),
+        communication_score=scores.get("communication", 0),
+        star_score=scores.get("star_method", 0),
+        completeness_score=scores.get("completeness", 0),
         overall_score=overall,
-        feedback_json=json.dumps({
-            "strengths": ["Good attempt", "Relevant content included"],
-            "improvements": ["Add more specific examples", "Use STAR structure"],
-        }),
-        model_answer="A strong answer would include specific examples with measurable outcomes and follow the STAR method.",
+        feedback_json=json.dumps({"strengths": strengths, "improvements": improvements}),
+        model_answer=model_answer,
     )
     db.add(answer)
 
-    # Advance to next question
+    # Advance interview state
     next_index = request.question_index + 1
     is_complete = next_index >= len(questions)
-
     interview.current_question = next_index
     if is_complete:
         interview.status = "completed"
         interview.completed_at = datetime.now(timezone.utc)
+        # Auto-generate report
+        await _generate_report(interview, db)
 
     db.commit()
-
-    # Determine next question
-    next_q = None
-    if not is_complete:
-        next_q = Question(**questions[next_index])
 
     return AnswerFeedback(
         question_index=request.question_index,
         scores=scores,
         overall_score=overall,
-        strengths=["Good attempt", "Relevant content included"],
-        improvements=["Add specific examples", "Use STAR method for behavioral questions"],
-        model_answer=answer.model_answer,
-        next_question=next_q,
+        strengths=strengths,
+        improvements=improvements,
+        model_answer=model_answer,
+        next_question=Question(**questions[next_index]) if not is_complete else None,
         is_complete=is_complete,
     )
+
+
+async def _evaluate_answer(
+    question: str, question_type: str, answer: str,
+    job_title: str, experience_level: str
+) -> tuple:
+    """Evaluate with Granite; fall back to rule-based scoring."""
+    try:
+        from app.services.granite_service import granite
+        from app.prompts.evaluation import build_evaluation_prompt
+
+        if granite.is_available:
+            prompt = build_evaluation_prompt(
+                question=question,
+                question_type=question_type,
+                answer=answer,
+                job_title=job_title,
+                experience_level=experience_level,
+            )
+            result = granite.generate_json(prompt)
+            if isinstance(result, dict) and "scores" in result:
+                return (
+                    result["scores"],
+                    result.get("strengths", ["Good attempt"]),
+                    result.get("improvements", ["Add more specific examples"]),
+                    result.get("model_answer", "A strong answer includes specific examples, quantifiable results, and clear structure.")
+                )
+    except Exception as e:
+        logger.warning(f"Granite evaluation failed: {e}. Using rule-based scoring.")
+
+    # Rule-based fallback scoring
+    word_count = len(answer.split())
+    base = min(9.0, max(3.0, word_count / 25.0 * 10.0))
+    scores = {
+        "technical":     round(min(10.0, base * 0.9), 1),
+        "grammar":       round(min(10.0, base * 1.0), 1),
+        "communication": round(min(10.0, base * 0.95), 1),
+        "star_method":   round(min(10.0, base * 0.85), 1),
+        "completeness":  round(min(10.0, base * 0.9), 1),
+    }
+    return (
+        scores,
+        ["Clear response", "Relevant content"],
+        ["Add specific examples with measurable outcomes", "Use STAR method for behavioral answers"],
+        "A strong answer includes specific examples, quantifiable results, and clear structure.",
+    )
+
+
+async def _generate_report(interview: Interview, db: Session):
+    """Auto-generate the final report after interview completion."""
+    try:
+        from app.services.report_service import generate_report
+        await generate_report(interview.id, db)
+    except Exception as e:
+        logger.error(f"Auto report generation failed: {e}")

@@ -1,0 +1,75 @@
+# =============================================================================
+# .dockerignore — Files to exclude from the Docker build context
+# =============================================================================
+#
+# WHY THIS FILE EXISTS:
+#   When Docker builds an image it first sends the entire build context
+#   (all files in this directory) to the Docker daemon.
+#   .dockerignore tells Docker to SKIP certain files — making the build:
+#     - Faster (less data to transfer)
+#     - Smaller (no dev files baked into the image)
+#     - More secure (no secrets accidentally included)
+# =============================================================================
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Environment / Secrets ─────────────────────────────────────────────────────
+# NEVER include .env in the Docker image — use Code Engine env vars instead
+.env
+.env.*
+!.env.example
+
+# ── Database (dev SQLite file) ────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── ChromaDB (rebuilt on startup from datasets/) ─────────────────────────────
+chroma_db/
+
+# ── Uploads & Reports (runtime data, use volumes or COS) ─────────────────────
+uploads/
+reports/
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── Tests ─────────────────────────────────────────────────────────────────────
+test_*.py
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+.gitattributes
+
+# ── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Documentation ─────────────────────────────────────────────────────────────
+*.md
+docs/

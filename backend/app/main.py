@@ -42,6 +42,10 @@ async def lifespan(app: FastAPI):
     Code after  `yield` → runs on shutdown.
     """
     # ── STARTUP ───────────────────────────────────────────────────────────────
+    # Apply production overrides when ENV=production (IBM Cloud deployment)
+    from app.production import apply_production_overrides
+    apply_production_overrides()
+
     logger.info(f"Starting {settings.app_name} v{settings.app_version}")
     logger.info(f"  Debug mode : {settings.debug}")
     logger.info(f"  Database   : {settings.database_url}")
@@ -57,6 +61,14 @@ async def lifespan(app: FastAPI):
     from app.database import init_db
     init_db()
     logger.info("Database initialised.")
+
+    # Populate ChromaDB knowledge base on startup (if empty)
+    try:
+        from app.rag.retriever import ensure_knowledge_base_populated
+        count = ensure_knowledge_base_populated()
+        logger.info(f"Knowledge base ready: {count} documents in ChromaDB.")
+    except Exception as e:
+        logger.warning(f"Knowledge base init skipped: {e}")
 
     logger.success("Application startup complete.")
 
@@ -103,9 +115,40 @@ app.add_middleware(
 
 # ── Static Files ──────────────────────────────────────────────────────────────
 # Serve generated PDF reports at /static/reports/<filename>
-# This lets the frontend download reports without a separate file endpoint
 if os.path.exists("./reports"):
     app.mount("/static/reports", StaticFiles(directory="./reports"), name="reports")
+
+# ── Serve React frontend in production ────────────────────────────────────────
+# When ENV=production, FastAPI serves the built React app from backend/static/
+# This is the "single container" strategy: one image serves both backend + frontend.
+# The React build is copied into backend/static/ by the CI/CD pipeline.
+#
+# HOW IT WORKS:
+#   1. npm run build  → creates frontend/dist/  (HTML, JS, CSS)
+#   2. CI copies dist/ → backend/static/
+#   3. FastAPI serves static/ at the root path
+#   4. The catch-all route below sends ALL unmatched routes → index.html
+#      (required for React Router — deep links like /dashboard must work)
+if os.getenv("ENV") == "production" and os.path.exists("./static"):
+    from fastapi.responses import FileResponse as _FileResponse
+    from fastapi.staticfiles import StaticFiles as _StaticFiles
+
+    # Mount JS/CSS/image assets at /assets
+    if os.path.exists("./static/assets"):
+        app.mount("/assets", _StaticFiles(directory="./static/assets"), name="frontend_assets")
+
+    # Catch-all: any route not matched by the API returns index.html
+    # This allows React Router to handle client-side navigation
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_react_app(full_path: str):
+        """
+        Serves the React SPA for any non-API route.
+        React Router handles the routing client-side.
+        """
+        index_path = "./static/index.html"
+        if os.path.exists(index_path):
+            return _FileResponse(index_path)
+        return {"error": "Frontend not found. Run npm run build first."}
 
 
 # ── Health Check Endpoint ─────────────────────────────────────────────────────

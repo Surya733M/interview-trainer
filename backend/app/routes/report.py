@@ -93,6 +93,13 @@ def download_pdf(
     if not report.pdf_path or not os.path.exists(report.pdf_path):
         raise NotFoundError("PDF file")
 
+    # Generate PDF on demand if not already created
+    if not report.pdf_path or not os.path.exists(report.pdf_path):
+        from app.services.pdf_service import generate_pdf_report
+        pdf_path = generate_pdf_report(report)
+        report.pdf_path = pdf_path
+        db.commit()
+
     return FileResponse(
         path=report.pdf_path,
         filename=f"interview_report_{interview_id}.pdf",
